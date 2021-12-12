@@ -55,4 +55,8 @@ public class Student extends Person {
 		this.studId = studId;
 	}
 
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

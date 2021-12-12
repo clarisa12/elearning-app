@@ -128,4 +128,8 @@ public class Person {
 		this.persAdress = persAdress;
 		this.persPhone = persPhone;
 	}
+	public Person() {
+		super();
+	}
+	
 }
