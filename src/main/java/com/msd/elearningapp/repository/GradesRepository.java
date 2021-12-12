@@ -7,6 +7,6 @@ import com.msd.elearningapp.domain.Grades;
 
 
 @Repository
-public interface GradesRespository extends JpaRepository<Grades, Long> {
+public interface GradesRepository extends JpaRepository<Grades, Long> {
 
 }
