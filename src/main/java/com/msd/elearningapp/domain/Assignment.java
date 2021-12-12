@@ -33,7 +33,7 @@ public class Assignment {
 
     @OneToOne
     @JoinColumn(name = "assig_starter_stud_id")
-    @NotNull
+    //@NotNull
     private Student assigStarter;
 
     private AssignmentState assigState;
@@ -84,8 +84,8 @@ public class Assignment {
     public List<Student> getassigMem() {
         return assigMem;
     }
-    public void setassigMem(ArrayList<Student> assigMem) {
-        this.assigMem = assigMem;
+    public void setassigMem(List<Student> list) {
+        this.assigMem = list;
     }
     @Override
     public String toString() {

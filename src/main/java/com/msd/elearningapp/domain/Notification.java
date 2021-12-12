@@ -36,6 +36,10 @@ public class Notification {
     public void setTxtNotif(String txtNotif) {
         this.txtNotif = txtNotif;
     }
-
-
+	public Notification(Date dateNotif, @NotNull Integer idNotif, @NotEmpty String txtNotif) {
+		super();
+		this.dateNotif = dateNotif;
+		this.idNotif = idNotif;
+		this.txtNotif = txtNotif;
+	}
 }

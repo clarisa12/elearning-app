@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class Task {
     @Id @GeneratedValue @NotNull
-    private String tskID;
+    private Long tskId;
 
     @NotNull(message = "Start Date is required!")
     @Future(message = "Start Date must be a future date!")
@@ -32,11 +32,11 @@ public class Task {
     @ManyToOne
     private Assignment tskAssig; //HERE
     private TaskState tskState;
-    public String getTskID() {
-        return tskID;
+    public Long getTskId() {
+        return tskId;
     }
-    public void setTskID(String tskID) {
-        this.tskID = tskID;
+    public void setTskId(Long tskId) {
+        this.tskId = tskId;
     }
     public Date getTskStartDate() {
         return tskStartDate;
@@ -74,10 +74,10 @@ public class Task {
     public void setTskState(TaskState tskState) {
         this.tskState = tskState;
     }
-    public Task(String tskID, Date tskStartDate, Date tskEndDate, String tskDescription, Student tskStudResponsible,
+    public Task(Long tskId, Date tskStartDate, Date tskEndDate, String tskDescription, Student tskStudResponsible,
                 Assignment tskAssig, TaskState tskState) {
         super();
-        this.tskID = tskID;
+        this.tskId = tskId;
         this.tskStartDate = tskStartDate;
         this.tskEndDate = tskEndDate;
         this.tskDescription = tskDescription;
@@ -90,7 +90,7 @@ public class Task {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(tskID);
+        return Objects.hash(tskId);
     }
     @Override
     public boolean equals(Object obj) {
@@ -101,7 +101,7 @@ public class Task {
         if (getClass() != obj.getClass())
             return false;
         Task other = (Task) obj;
-        return Objects.equals(tskID, other.tskID);
+        return Objects.equals(tskId, other.tskId);
     }
 
 

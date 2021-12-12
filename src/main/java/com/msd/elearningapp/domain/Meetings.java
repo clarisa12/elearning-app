@@ -17,11 +17,13 @@ public class Meetings {
     @Size(min = 1, max = 1000)
     private String meetingBody;
 
-    @NotNull @Future
+    @NotNull 
+    @Future(message = "Meeting start date must be later than present date!")
     @Temporal(TemporalType.DATE)
     private Date meetingStartDate;
 
-    @NotNull @Future
+    @NotNull 
+    @Future(message = "Meeting end date must be later than present date!")
     @Temporal(TemporalType.DATE)
     private Date meetingEndDate;
 
@@ -77,8 +79,8 @@ public class Meetings {
     public List<Student> getMeetingMembers() {
         return meetingMembers;
     }
-    public void setMeetingMembers(ArrayList<Student> meetingMembers) {
-        this.meetingMembers = meetingMembers;
+    public void setMeetingMembers(List<Student> list) {
+        this.meetingMembers = list;
     }
     public MeetingState getMeetingState() {
         return meetingState;
@@ -93,7 +95,4 @@ public class Meetings {
                 + ", mentor=" + mentor +", meetingObs=" + meetingObs + ", meetingTopic=" + meetingTopic
                 + ", meetingState=" + meetingState + "]";
     }
-
-
-
 }

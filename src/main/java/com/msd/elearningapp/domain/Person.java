@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,31 +13,37 @@ import java.util.Objects;
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 public class Person {
-    @NotNull
-    private String persIdentityNum;
+    @NotNull(message = "CNP is required!")
+    private Long persIdentityNum;
 
-    @NotNull
+    @NotNull(message = "First name is required!")
+    @Size(min=1, message = "First name must be an explicit name!")
     private String persFirstName;
 
-    @NotNull
+    @NotNull(message = "Last name is required!")
+    @Size(min=1, message = "Last name must be an explicit name!")
     private String persLastName;
 
     @Temporal(TemporalType.DATE)
-    @Past
+    @Past(message ="Date of birth must be from past!")
     private Date persDoB;
 
-    @Email
+    @Email(message = "Email must be in correct format! example@mail.com")
     @NotNull
+    @Size(min=5, message = "Email must be in correct format!")
     private String persEmail;
 
-    @NotNull
     private String persNum;
+    
+    @Size(min=1, message = "Adress must be explicit!")
     private String persAdress;
+    
     private String persPhone;
-    public String getPersIdentityNum() {
+    
+    public Long getPersIdentityNum() {
         return persIdentityNum;
     }
-    public void setPersIdentityNum(String persIdentityNum) {
+    public void setPersIdentityNum(Long persIdentityNum) {
         this.persIdentityNum = persIdentityNum;
     }
     public String getPersFirstName() {
@@ -107,6 +115,17 @@ public class Person {
                 + persLastName + ", persDoB=" + persDoB + ", persEmail=" + persEmail + ", persNum=" + persNum
                 + ", persAdress=" + persAdress + ", persPhone=" + persPhone + "]";
     }
-
-
+	public Person(@NotNull Long persIdentityNum, @NotNull String persFirstName, @NotNull String persLastName,
+			@Past Date persDoB, @Email @NotNull String persEmail, @NotNull String persNum, String persAdress,
+			String persPhone) {
+		super();
+		this.persIdentityNum = persIdentityNum;
+		this.persFirstName = persFirstName;
+		this.persLastName = persLastName;
+		this.persDoB = persDoB;
+		this.persEmail = persEmail;
+		this.persNum = persNum;
+		this.persAdress = persAdress;
+		this.persPhone = persPhone;
+	}
 }

@@ -1,21 +1,25 @@
 package com.msd.elearningapp.domain;
 
+import java.util.Date;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 @Entity(name = "Professor")
 @Table(name = "professor")
 public class Professor extends Person {
-    @NotEmpty
+    @NotEmpty(message = "Professor must be part of a department!")
     private String profDepartment;
-    @NotEmpty
+    @NotEmpty(message = "Professor must be part of a faculty!")
     private String profFaculty;
-
+    @NotEmpty(message = "Professor must have a title!")
     private String profTitle;
 
     @Id @GeneratedValue @NotNull
-    private String profId;
+    private Long profId;
 
     /*@OneToOne(mappedBy = "mentor", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY, optional = false)
@@ -39,12 +43,22 @@ public class Professor extends Person {
     public void setProfTitle(String profTitle) {
         this.profTitle = profTitle;
     }
-    public String getProfId() {
+    public Long getProfId() {
         return profId;
     }
-    public void setProfId(String profId) {
+    public void setProfId(Long profId) {
         this.profId = profId;
     }
-
+	public Professor(@NotNull Long persIdentityNum, @NotNull String persFirstName, @NotNull String persLastName,
+			@Past Date persDoB, @Email @NotNull String persEmail, @NotNull String persNum, String persAdress,
+			String persPhone, @NotEmpty String profDepartment, @NotEmpty String profFaculty, String profTitle,
+			@NotNull Long profId) {
+		super(persIdentityNum, persFirstName, persLastName, persDoB, persEmail, persNum, persAdress, persPhone);
+		this.profDepartment = profDepartment;
+		this.profFaculty = profFaculty;
+		this.profTitle = profTitle;
+		this.profId = profId;
+	}
+    
 }
 
