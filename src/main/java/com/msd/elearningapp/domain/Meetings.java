@@ -54,12 +54,7 @@ public class Meetings {
     public void setMeetingEndDate(Date meetingEndDate) {
         this.meetingEndDate = meetingEndDate;
     }
-    public List<Student> getAgMembers() {
-        return meetingMembers;
-    }
-    public void setAgMembers(List<Student> agMembers) {
-        this.meetingMembers = agMembers;
-    }
+   
     public Professor getMentor() {
         return mentor;
     }
