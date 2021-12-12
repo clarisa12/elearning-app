@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.msd.elearningapp.domain.Meetings;
 
 @Repository
-public interface MeetingsRespository extends JpaRepository<Meetings, Long>{
+public interface MeetingsRepository extends JpaRepository<Meetings, Long>{
 
 }
