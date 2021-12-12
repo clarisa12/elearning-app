@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class Assignment {
 
     @Id @GeneratedValue @NotNull @Min(10)
-    private Integer assigID;
+    private Integer assigId;
 
     @NotNull(message = "Start Date is required!")
     @Future(message = "Start Date must be a future date!")
@@ -45,11 +45,11 @@ public class Assignment {
         return assigStarter;
     }
 
-    public Integer getassigID() {
-        return assigID;
+    public Integer getassigId() {
+        return assigId;
     }
-    public void setassigID(Integer assigID) {
-        this.assigID = assigID;
+    public void setassigId(Integer assigId) {
+        this.assigId = assigId;
     }
     public Date getassigDatestart() {
         return assigDatestart;
@@ -89,15 +89,15 @@ public class Assignment {
     }
     @Override
     public String toString() {
-        return "Assignment [assigID=" + assigID + ", assigDatestart=" + assigDatestart + ", assigDateEnd=" + assigDateEnd
+        return "Assignment [assigId=" + assigId + ", assigDatestart=" + assigDatestart + ", assigDateEnd=" + assigDateEnd
                 + ", assigName=" + assigName + ", assigStarter=" + assigStarter + ", assigState=" + assigState + ", assigMem="
                 + assigMem + "]";
     }
 
-    public Assignment(Integer assigID, Date assigDatestart, Date assigDateEnd, String assigName, Student assigStarter,
+    public Assignment(Integer assigId, Date assigDatestart, Date assigDateEnd, String assigName, Student assigStarter,
                       AssignmentState assigState, ArrayList<Student> assigMem) {
         super();
-        this.assigID = assigID;
+        this.assigId = assigId;
         this.assigDatestart = assigDatestart;
         this.assigDateEnd = assigDateEnd;
         this.assigName = assigName;
@@ -111,7 +111,7 @@ public class Assignment {
     }
     @Override
     public int hashCode() {
-        return Objects.hash(assigID);
+        return Objects.hash(assigId);
     }
     @Override
     public boolean equals(Object obj) {
@@ -122,7 +122,7 @@ public class Assignment {
         if (getClass() != obj.getClass())
             return false;
         Assignment other = (Assignment) obj;
-        return Objects.equals(assigID, other.assigID);
+        return Objects.equals(assigId, other.assigId);
     }
 
 
