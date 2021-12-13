@@ -14,7 +14,7 @@ public class Documentation {
     private String docObs;
 
     @Id @GeneratedValue
-    private Integer idDoc;
+    private Long idDoc;
     public String getDocBody() {
         return docBody;
     }
@@ -27,16 +27,20 @@ public class Documentation {
     public void setDocObs(String docObs) {
         this.docObs = docObs;
     }
-    public Integer getIdDoc() {
+    public Long getIdDoc() {
         return idDoc;
     }
-    public void setIdDoc(Integer idDoc) {
+    public void setIdDoc(Long idDoc) {
         this.idDoc = idDoc;
     }
-	public Documentation(@Size(min = 1, max = 10000) String docBody, String docObs, Integer idDoc) {
+	public Documentation(@Size(min = 1, max = 10000) String docBody, String docObs, Long idDoc) {
 		super();
 		this.docBody = docBody;
 		this.docObs = docObs;
 		this.idDoc = idDoc;
 	}
+	public Documentation() {
+		super();
+	}
+	
 }
