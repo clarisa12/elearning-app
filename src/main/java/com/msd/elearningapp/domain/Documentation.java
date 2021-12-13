@@ -1,5 +1,7 @@
 package com.msd.elearningapp.domain;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -42,5 +44,22 @@ public class Documentation {
 	public Documentation() {
 		super();
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(docBody, docObs, idDoc);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Documentation other = (Documentation) obj;
+		return Objects.equals(docBody, other.docBody) && Objects.equals(docObs, other.docObs)
+				&& Objects.equals(idDoc, other.idDoc);
+	}
+	
 	
 }
