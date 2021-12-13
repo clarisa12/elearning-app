@@ -1,79 +1,68 @@
 package com.msd.elearningapp.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.msd.elearningapp.domain.Grades;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.GradesRepository;
 
-
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api/v1/")
+class GradeController {
 
-public class GradesController {
+  private final GradesRepository repository;
 
-	@Autowired
-	private GradesRepository gradeRepository;
-	
-	// get all grades
-	@GetMapping("/grades")
-	public List<Grades> getAllGradess(){
-		return gradeRepository.findAll();
-	}		
-	
-	// create grade rest api
-	@PostMapping("/grades")
-	public Grades createGrades(@RequestBody Grades grade) {
-		return gradeRepository.save(grade);
-	}
-	
-	// get grade by id rest api
-	@GetMapping("/grades/{gradeId}")
-	public ResponseEntity<Grades> getGradesById(@PathVariable Long gradeId) {
-		Grades grade = gradeRepository.findById(gradeId)
-				.orElseThrow(() -> new ResourceNotFoundException("Grades does not exist with id :" + gradeId));
-		return ResponseEntity.ok(grade);
-	}
-	
-	// update grade rest api
-	
-	@PutMapping("/grades/{gradeId}")
-	public ResponseEntity<Grades> updateGrades(@PathVariable Long gradeId, @RequestBody Grades gradeDetails){
-		Grades grade = gradeRepository.findById(gradeId)
-				.orElseThrow(() -> new ResourceNotFoundException("Grades does not exist with id :" + gradeId));
-		
-		grade.setGradeDate(grade.getGradeDate());
-		grade.setGradeValue(grade.getGradeValue());
-		
-		Grades updatedGrades = gradeRepository.save(grade);
-		return ResponseEntity.ok(updatedGrades);
-	}
-	
-	// delete grade rest api
-	@DeleteMapping("/grades/{gradeId}")
-	public ResponseEntity<Map<String, Boolean>> deleteGrades(@PathVariable Long gradeId){
-		Grades grade = gradeRepository.findById(gradeId)
-				.orElseThrow(() -> new ResourceNotFoundException("Grades does not exist with id :" + gradeId));
-		
-		gradeRepository.delete(grade);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
-	}
-	
+  GradeController(GradesRepository repository) {
+    this.repository = repository;
+  }
+
+
+  // Aggregate root
+  // tag::get-aggregate-root[]
+  @GetMapping("/grades")
+  List<Grades> all() {
+    return repository.findAll();
+  }
+  // end::get-aggregate-root[]
+
+  @PostMapping("/grades")
+  Grades newGrade(@RequestBody Grades newGrade) {
+    return repository.save(newGrade);
+  }
+
+  // Single item
+  
+  @GetMapping("/grades/{id}")
+  Grades one(@PathVariable Long id) {
+    
+    return repository.findById(id)
+      .orElseThrow(() -> new ResourceNotFoundException(id));
+  }
+
+  @PutMapping("/grades/{id}")
+  Grades replaceGrade(@RequestBody Grades newGrade, @PathVariable Long id) {
+    
+    return repository.findById(id)
+      .map(grade -> {
+    	  grade.setGradeDate(grade.getGradeDate());
+    	  grade.setGradeValue(grade.getGradeValue());
+        return repository.save(grade);
+      })
+      .orElseGet(() -> {
+        newGrade.setGradeId(id);
+        return repository.save(newGrade);
+      });
+  }
+
+  @DeleteMapping("/grades/{id}")
+  void deleteGrade(@PathVariable Long id) {
+    repository.deleteById(id);
+  }
 }
