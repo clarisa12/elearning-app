@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.msd.elearningapp.domain.Student;
 
-
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long>{
 
