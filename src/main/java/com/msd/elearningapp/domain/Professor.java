@@ -1,6 +1,7 @@
 package com.msd.elearningapp.domain;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -58,6 +59,28 @@ public class Professor extends Person {
 		this.profFaculty = profFaculty;
 		this.profTitle = profTitle;
 		this.profId = profId;
+	}
+	public Professor() {
+		super();
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(profDepartment, profFaculty, profId, profTitle);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Professor other = (Professor) obj;
+		return Objects.equals(profDepartment, other.profDepartment) && Objects.equals(profFaculty, other.profFaculty)
+				&& Objects.equals(profId, other.profId) && Objects.equals(profTitle, other.profTitle);
 	}
     
 }
