@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 public class Assignment {
 
     @Id @GeneratedValue @NotNull @Min(10)
-    private Integer assigId;
+    private Long assigId;
 
     @NotNull(message = "Start Date is required!")
     @Future(message = "Start Date must be a future date!")
@@ -45,10 +45,10 @@ public class Assignment {
         return assigStarter;
     }
 
-    public Integer getassigId() {
+    public @NotNull @Min(10) Long getassigId() {
         return assigId;
     }
-    public void setassigId(Integer assigId) {
+    public void setassigId(@NotNull @Min(10) Long assigId) {
         this.assigId = assigId;
     }
     public Date getassigDatestart() {
@@ -94,7 +94,7 @@ public class Assignment {
                 + assigMem + "]";
     }
 
-    public Assignment(Integer assigId, Date assigDatestart, Date assigDateEnd, String assigName, Student assigStarter,
+    public Assignment(@NotNull @Min(10) Long assigId, Date assigDatestart, Date assigDateEnd, String assigName, Student assigStarter,
                       AssignmentState assigState, ArrayList<Student> assigMem) {
         super();
         this.assigId = assigId;
@@ -124,6 +124,8 @@ public class Assignment {
         Assignment other = (Assignment) obj;
         return Objects.equals(assigId, other.assigId);
     }
+
+	
 
 
 }
