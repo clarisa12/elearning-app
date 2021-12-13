@@ -1,7 +1,7 @@
 package com.msd.elearningapp.domain;
 
 import java.util.List;
-
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class Workgroups {
 
     @Id @GeneratedValue @NotNull
-    private Integer wrkId;
+    private Long wrkId;
 
     @OneToMany
     private List<Student> wkrList;
@@ -26,10 +26,10 @@ public class Workgroups {
     @JoinColumn (name="profId")
     private Professor mentor;
 
-    public Integer getWrkID() {
+    public @NotNull Long getWrkID() {
         return wrkId;
     }
-    public void setWrkID(Integer wrkId) {
+    public void setWrkId(@NotNull Long wrkId) {
         this.wrkId = wrkId;
     }
     public List<Student> getWkrList() {
@@ -50,7 +50,7 @@ public class Workgroups {
     public void setMentor(Professor mentor) {
         this.mentor = mentor;
     }
-	public Workgroups(@NotNull Integer wrkId, List<Student> wkrList,
+	public Workgroups(@NotNull @NotNull Long wrkId, List<Student> wkrList,
 			@NotNull(message = "Workgroup Name is required!") @Size(min = 1, message = "Workgroup Name must have an explicit name!") String wkrName,
 			@NotNull(message = "Workgroup must have a mentor!") Professor mentor) {
 		super();
@@ -58,6 +58,25 @@ public class Workgroups {
 		this.wkrList = wkrList;
 		this.wkrName = wkrName;
 		this.mentor = mentor;
+	}
+	public Workgroups() {
+		super();
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(mentor, wkrList, wkrName, wrkId);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Workgroups other = (Workgroups) obj;
+		return Objects.equals(mentor, other.mentor) && Objects.equals(wkrList, other.wkrList)
+				&& Objects.equals(wkrName, other.wkrName) && Objects.equals(wrkId, other.wrkId);
 	}
 
 }
