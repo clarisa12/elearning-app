@@ -1,6 +1,6 @@
 package com.msd.elearningapp.domain;
 
-import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,122 +10,146 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "valid" })
+@XmlRootElement(name = "Assignment")
+@Table(name = "assignment")
 public class Assignment {
 
-    @Id @GeneratedValue @NotNull @Min(10)
-    private Long assigId;
+	@Id
+	@GeneratedValue
+	@NotNull
+	@Min(10)
+	private Long assigId;
 
-    @NotNull(message = "Start Date is required!")
-    @Future(message = "Start Date must be a future date!")
-    @Temporal(TemporalType.DATE)
-    private Date assigDatestart;
+	@NotNull(message = "Assignment Name is required!")
+	@Size(min = 1, message = "Assignment must have an explicit name!")
+	private String assigName;
 
-    @NotNull(message = "End Date is required!")
-    @Future(message = "End Date must be a future date!")
-    @Temporal(TemporalType.DATE)
-    private Date assigDateEnd;
+	@NotNull(message = "Start Date is required!")
+	@Future(message = "Start Date must be a future date!")
+	@Temporal(TemporalType.DATE)
+	private Date assigDatestart;
 
-    @NotNull(message = "Assignment Name is required!")
-    @Size(min=1, message = "Assignment must have an explicit name!")
-    private String assigName;
+	@NotNull(message = "End Date is required!")
+	@Future(message = "End Date must be a future date!")
+	@Temporal(TemporalType.DATE)
+	private Date assigDateEnd;
 
-    @OneToOne
-    @JoinColumn(name = "assig_starter_stud_id")
-    //@NotNull
-    private Student assigStarter;
+	private AssignmentState assigState;
 
-    private AssignmentState assigState;
+	@OneToOne
+	@JoinColumn(name = "assig_starter_stud_id")
+	// @NotNull
+	private Student assigStarter;
 
-    @ManyToMany
-    private List<Student> assigMem;
+	@ManyToMany
+	private List<Student> assigMem;
 
-    public Student getAssigStarter() {
-        return assigStarter;
-    }
+	public Long getAssigId() {
+		return assigId;
+	}
 
-    public @NotNull @Min(10) Long getassigId() {
-        return assigId;
-    }
-    public void setassigId(@NotNull @Min(10) Long assigId) {
-        this.assigId = assigId;
-    }
-    public Date getassigDatestart() {
-        return assigDatestart;
-    }
-    public void setassigDatestart(Date assigDatestart) {
-        this.assigDatestart = assigDatestart;
-    }
-    public Date getassigDateEnd() {
-        return assigDateEnd;
-    }
-    public void setassigDateEnd(Date assigDateEnd) {
-        this.assigDateEnd = assigDateEnd;
-    }
-    public String getassigName() {
-        return assigName;
-    }
-    public void setassigName(String assigName) {
-        this.assigName = assigName;
-    }
-    public Student getassigStarter() {
-        return assigStarter;
-    }
-    public void setassigStarter (Student assigStarter) {
-        this.assigStarter = assigStarter;
-    }
-    public AssignmentState getassigState() {
-        return assigState;
-    }
-    public void setassigState(AssignmentState assigState) {
-        this.assigState = assigState;
-    }
-    public List<Student> getassigMem() {
-        return assigMem;
-    }
-    public void setassigMem(List<Student> list) {
-        this.assigMem = list;
-    }
-    @Override
-    public String toString() {
-        return "Assignment [assigId=" + assigId + ", assigDatestart=" + assigDatestart + ", assigDateEnd=" + assigDateEnd
-                + ", assigName=" + assigName + ", assigStarter=" + assigStarter + ", assigState=" + assigState + ", assigMem="
-                + assigMem + "]";
-    }
+	public void setAssigId(Long assigId) {
+		this.assigId = assigId;
+	}
 
-    public Assignment(@NotNull @Min(10) Long assigId, Date assigDatestart, Date assigDateEnd, String assigName, Student assigStarter,
-                      AssignmentState assigState, ArrayList<Student> assigMem) {
-        super();
-        this.assigId = assigId;
-        this.assigDatestart = assigDatestart;
-        this.assigDateEnd = assigDateEnd;
-        this.assigName = assigName;
-        this.assigStarter = (Student) assigStarter;
-        this.assigState = assigState;
-        this.assigMem = assigMem;
-    }
+	public String getAssigName() {
+		return assigName;
+	}
 
-    public Assignment() {
+	public void setAssigName(String assigName) {
+		this.assigName = assigName;
+	}
 
-    }
-    @Override
-    public int hashCode() {
-        return Objects.hash(assigId);
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Assignment other = (Assignment) obj;
-        return Objects.equals(assigId, other.assigId);
-    }
+	public Date getAssigDatestart() {
+		return assigDatestart;
+	}
 
-	
+	public void setAssigDatestart(Date assigDatestart) {
+		this.assigDatestart = assigDatestart;
+	}
 
+	public Date getAssigDateEnd() {
+		return assigDateEnd;
+	}
+
+	public void setAssigDateEnd(Date assigDateEnd) {
+		this.assigDateEnd = assigDateEnd;
+	}
+
+	public AssignmentState getAssigState() {
+		return assigState;
+	}
+
+	public void setAssigState(AssignmentState assigState) {
+		this.assigState = assigState;
+	}
+
+	public Student getAssigStarter() {
+		return assigStarter;
+	}
+
+	public void setAssigStarter(Student assigStarter) {
+		this.assigStarter = assigStarter;
+	}
+
+	public List<Student> getAssigMem() {
+		return assigMem;
+	}
+
+	public void setAssigMem(List<Student> assigMem) {
+		this.assigMem = assigMem;
+	}
+
+	public Assignment(@NotNull @Min(10) Long assigId,
+			@NotNull(message = "Assignment Name is required!") @Size(min = 1, message = "Assignment must have an explicit name!") String assigName,
+			@NotNull(message = "Start Date is required!") @Future(message = "Start Date must be a future date!") Date assigDatestart,
+			@NotNull(message = "End Date is required!") @Future(message = "End Date must be a future date!") Date assigDateEnd,
+			AssignmentState assigState, Student assigStarter, List<Student> assigMem) {
+		super();
+		this.assigId = assigId;
+		this.assigName = assigName;
+		this.assigDatestart = assigDatestart;
+		this.assigDateEnd = assigDateEnd;
+		this.assigState = assigState;
+		this.assigStarter = assigStarter;
+		this.assigMem = assigMem;
+	}
+
+	public Assignment() {
+		super();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(assigDateEnd, assigDatestart, assigId, assigMem, assigName, assigStarter, assigState);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Assignment other = (Assignment) obj;
+		return Objects.equals(assigDateEnd, other.assigDateEnd) && Objects.equals(assigDatestart, other.assigDatestart)
+				&& Objects.equals(assigId, other.assigId) && Objects.equals(assigMem, other.assigMem)
+				&& Objects.equals(assigName, other.assigName) && Objects.equals(assigStarter, other.assigStarter)
+				&& assigState == other.assigState;
+	}
+
+	@Override
+	public String toString() {
+		return "Assignment [assigId=" + assigId + ", assigName=" + assigName + ", assigDatestart=" + assigDatestart
+				+ ", assigDateEnd=" + assigDateEnd + ", assigState=" + assigState + ", assigStarter=" + assigStarter
+				+ ", assigMem=" + assigMem + "]";
+	}
 
 }

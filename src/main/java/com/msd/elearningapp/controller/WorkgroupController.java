@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.msd.elearningapp.domain.Workgroups;
+import com.msd.elearningapp.domain.Workgroup;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
-import com.msd.elearningapp.repository.WorkgroupsRepository;
+import com.msd.elearningapp.repository.WorkgroupRepository;
 
 @RestController
 class WorkgroupsController {
 
-  private final WorkgroupsRepository repository;
+  private final WorkgroupRepository repository;
 
-  WorkgroupsController(WorkgroupsRepository repository) {
+  WorkgroupsController(WorkgroupRepository repository) {
     this.repository = repository;
   }
 
@@ -27,27 +27,27 @@ class WorkgroupsController {
   // Aggregate root
   // tag::get-aggregate-root[]
   @GetMapping("/workgroups")
-  List<Workgroups> all() {
+  List<Workgroup> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
   @PostMapping("/workgroups")
-  Workgroups newWorkgroups(@RequestBody Workgroups newWorkgroups) {
+  Workgroup newWorkgroups(@RequestBody Workgroup newWorkgroups) {
     return repository.save(newWorkgroups);
   }
 
   // Single item
   
   @GetMapping("/workgroups/{id}")
-  Workgroups one(@PathVariable Long id) {
+  Workgroup one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   @PutMapping("/workgroups/{id}")
-  Workgroups replaceWorkgroups(@RequestBody Workgroups newWorkgroups, @PathVariable Long id) {
+  Workgroup replaceWorkgroups(@RequestBody Workgroup newWorkgroups, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(workgroup -> {

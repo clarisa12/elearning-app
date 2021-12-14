@@ -56,7 +56,6 @@ class AdministratorController {
   		administrator.setPersAdress(administrator.getPersAdress());
   		administrator.setPersDoB(administrator.getPersDoB());
   		administrator.setPersEmail(administrator.getPersEmail());
-  		administrator.setPersNum(administrator.getPersNum());
   		administrator.setPersPhone(administrator.getPersPhone());
   		administrator.setAdminTitle(administrator.getAdminTitle());
   		administrator.setAdminDepartment(administrator.getAdminDepartment());

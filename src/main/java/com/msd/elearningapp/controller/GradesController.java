@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.msd.elearningapp.domain.Grades;
+import com.msd.elearningapp.domain.Grade;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
-import com.msd.elearningapp.repository.GradesRepository;
+import com.msd.elearningapp.repository.GradeRepository;
 
 @RestController
 class GradeController {
 
-  private final GradesRepository repository;
+  private final GradeRepository repository;
 
-  GradeController(GradesRepository repository) {
+  GradeController(GradeRepository repository) {
     this.repository = repository;
   }
 
@@ -27,27 +27,27 @@ class GradeController {
   // Aggregate root
   // tag::get-aggregate-root[]
   @GetMapping("/grades")
-  List<Grades> all() {
+  List<Grade> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
   @PostMapping("/grades")
-  Grades newGrade(@RequestBody Grades newGrade) {
+  Grade newGrade(@RequestBody Grade newGrade) {
     return repository.save(newGrade);
   }
 
   // Single item
   
   @GetMapping("/grades/{id}")
-  Grades one(@PathVariable Long id) {
+  Grade one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   @PutMapping("/grades/{id}")
-  Grades replaceGrade(@RequestBody Grades newGrade, @PathVariable Long id) {
+  Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(grade -> {

@@ -51,15 +51,15 @@ class AssignmentController {
     
     return repository.findById(id)
       .map(assignment -> {
-    	  assignment.setassigDatestart(assignment.getassigDatestart());
-    		assignment.setassigDateEnd(assignment.getassigDateEnd());
-    		assignment.setassigName(assignment.getassigName());
-    		assignment.setassigStarter(assignment.getassigStarter());
-    		assignment.setassigMem(assignment.getassigMem());
+    	  assignment.setAssigDatestart(assignment.getAssigDatestart());
+    		assignment.setAssigDateEnd(assignment.getAssigDateEnd());
+    		assignment.setAssigName(assignment.getAssigName());
+    		assignment.setAssigStarter(assignment.getAssigStarter());
+    		assignment.setAssigMem(assignment.getAssigMem());
         return repository.save(assignment);
       })
       .orElseGet(() -> {
-        newAssignment.setassigId(id);
+        newAssignment.setAssigId(id);
         return repository.save(newAssignment);
       });
   }

@@ -1,9 +1,9 @@
 package com.msd.elearningapp.services;
 
-import com.msd.elearningapp.domain.Grades;
+import com.msd.elearningapp.domain.Grade;
 
 public interface IGradeWork {
 
-    public Grades gradeAssignment();
-    public Grades gradeWorkgroup();
+    public Grade gradeAssignment();
+    public Grade gradeWorkgroup();
 }

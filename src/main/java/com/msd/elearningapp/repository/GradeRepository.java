@@ -3,9 +3,10 @@ package com.msd.elearningapp.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.msd.elearningapp.domain.Meetings;
+import com.msd.elearningapp.domain.Grade;
+
 
 @Repository
-public interface MeetingsRepository extends JpaRepository<Meetings, Long>{
+public interface GradeRepository extends JpaRepository<Grade, Long> {
 
 }

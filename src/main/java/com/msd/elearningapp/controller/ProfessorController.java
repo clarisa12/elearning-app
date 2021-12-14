@@ -56,7 +56,6 @@ class ProfessorController {
   		professor.setPersAdress(professor.getPersAdress());
   		professor.setPersDoB(professor.getPersDoB());
   		professor.setPersEmail(professor.getPersEmail());
-  		professor.setPersNum(professor.getPersNum());
   		professor.setPersPhone(professor.getPersPhone());
   		professor.setProfTitle(professor.getProfTitle());
   		professor.setProfDepartment(professor.getProfDepartment());

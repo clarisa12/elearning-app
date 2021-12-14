@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.msd.elearningapp.domain.Meetings;
+import com.msd.elearningapp.domain.Meeting;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
-import com.msd.elearningapp.repository.MeetingsRepository;
+import com.msd.elearningapp.repository.MeetingRepository;
 
 @RestController
 class MeetingsController {
 
-  private final MeetingsRepository repository;
+  private final MeetingRepository repository;
 
-  MeetingsController(MeetingsRepository repository) {
+  MeetingsController(MeetingRepository repository) {
     this.repository = repository;
   }
 
@@ -27,27 +27,27 @@ class MeetingsController {
   // Aggregate root
   // tag::get-aggregate-root[]
   @GetMapping("/meetings")
-  List<Meetings> all() {
+  List<Meeting> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
   @PostMapping("/meetings")
-  Meetings newMeetings(@RequestBody Meetings newMeetings) {
+  Meeting newMeetings(@RequestBody Meeting newMeetings) {
     return repository.save(newMeetings);
   }
 
   // Single item
   
   @GetMapping("/meetings/{id}")
-  Meetings one(@PathVariable Long id) {
+  Meeting one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   @PutMapping("/meetings/{id}")
-  Meetings replaceMeetings(@RequestBody Meetings newMeetings, @PathVariable Long id) {
+  Meeting replaceMeetings(@RequestBody Meeting newMeetings, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(meeting -> {
