@@ -1,17 +1,17 @@
 package com.msd.elearningapp.services;
 
-import com.msd.elearningapp.domain.Grades;
+import com.msd.elearningapp.domain.Grade;
 
 public class GradeWorkImpl implements IGradeWork {
 
     @Override
-    public Grades gradeAssignment() {
+    public Grade gradeAssignment() {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Grades gradeWorkgroup() {
+    public Grade gradeWorkgroup() {
         // TODO Auto-generated method stub
         return null;
     }
