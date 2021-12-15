@@ -8,11 +8,7 @@ public class ResourceNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ResourceNotFoundException(String message) {
-		super(message);
-	}
-
 	public ResourceNotFoundException(Long id) {
-		// TODO Auto-generated constructor stub
+		super("Could not find resource " + id);
 	}
 }
