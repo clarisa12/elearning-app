@@ -1,5 +1,6 @@
 package com.msd.elearningapp.loaddatabase;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -32,20 +33,21 @@ class LoadDatabase {
 					"Admin3 title", "Admin3 department")));
 		};
 	}
-/*
+
 	@Bean
 	CommandLineRunner initDatabaseAssignment(AssignmentRepository repository) {
 
 		return args -> {
-			log.info("Preloading " + repository.save(new Assignment((long) 110, "Assignment1", new Date(2022 - 12 - 12),
-					new Date(2022 - 12 - 13), AssignmentState.PROPOSED, null, null)));
-			log.info("Preloading " + repository.save(new Assignment((long) 120, "Assignment2", new Date(2022 - 12 - 12),
-					new Date(2022 - 12 - 13), AssignmentState.PROPOSED, null, null)));
-			log.info("Preloading " + repository.save(new Assignment((long) 130, "Assignment3", new Date(2022 - 12 - 12),
-					new Date(2022 - 12 - 13), AssignmentState.PROPOSED, null, null)));
+
+			log.info("Preloading " + repository.save(new Assignment((long) 110, "Assignment1", LocalDate.of(2022, 1, 1),
+					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
+			log.info("Preloading " + repository.save(new Assignment((long) 111, "Assignment2", LocalDate.of(2022, 1, 1),
+					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
+			log.info("Preloading " + repository.save(new Assignment((long) 112, "Assignment3", LocalDate.of(2022, 1, 1),
+					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
 		};
 	}
-*/
+
 	@Bean
 	CommandLineRunner initDatabaseDocumentation(DocumentationRepository repository) {
 
@@ -67,19 +69,18 @@ class LoadDatabase {
 	}
 
 	/*
-	@Bean
-	CommandLineRunner initDatabaseMeeting(MeetingsRepository repository) {
-
-		return args -> {
-			log.info("Preloading " + repository.save(new Meetings((long) 1, "Meeting 1 body", new Date(2021 - 12 - 12),
-					new Date(2021 - 12 - 12), null, null, "Meeting 1 obs", "Meeting 1 topic", MeetingState.PROPOSED)));
-			log.info("Preloading " + repository.save(new Meetings((long) 2, "Meeting 2 body", new Date(2021 - 12 - 12),
-					new Date(2021 - 12 - 12), null, null, "Meeting 2 obs", "Meeting 2 topic", MeetingState.PROPOSED)));
-			log.info("Preloading " + repository.save(new Meetings((long) 3, "Meeting 3 body", new Date(2021 - 12 - 12),
-					new Date(2021 - 12 - 12), null, null, "Meeting 3 obs", "Meeting 3 topic", MeetingState.PROPOSED)));
-		};
-	}
-*/
+	 * @Bean CommandLineRunner initDatabaseMeeting(MeetingsRepository repository) {
+	 * 
+	 * return args -> { log.info("Preloading " + repository.save(new Meetings((long)
+	 * 1, "Meeting 1 body", new Date(2021 - 12 - 12), new Date(2021 - 12 - 12),
+	 * null, null, "Meeting 1 obs", "Meeting 1 topic", MeetingState.PROPOSED)));
+	 * log.info("Preloading " + repository.save(new Meetings((long) 2,
+	 * "Meeting 2 body", new Date(2021 - 12 - 12), new Date(2021 - 12 - 12), null,
+	 * null, "Meeting 2 obs", "Meeting 2 topic", MeetingState.PROPOSED)));
+	 * log.info("Preloading " + repository.save(new Meetings((long) 3,
+	 * "Meeting 3 body", new Date(2021 - 12 - 12), new Date(2021 - 12 - 12), null,
+	 * null, "Meeting 3 obs", "Meeting 3 topic", MeetingState.PROPOSED))); }; }
+	 */
 	@Bean
 	CommandLineRunner initDatabaseNotification(NotificationRepository repository) {
 
@@ -127,27 +128,28 @@ class LoadDatabase {
 		};
 	}
 	/*
+	 * @Bean CommandLineRunner initDatabaseTask(TaskRepository repository) {
+	 * 
+	 * return args -> {
+	 * 
+	 * log.info("Preloading " + repository.save(new Task((long)1, new Date(2021 - 12
+	 * - 12), new Date(2021 - 12 - 12), "Task1 desc", null, null,
+	 * TaskState.PROPOSED))); log.info("Preloading " + repository.save(new
+	 * Task((long)2, new Date(2021 - 12 - 12), new Date(2021 - 12 - 12),
+	 * "Task2 desc", null, null, TaskState.PROPOSED))); log.info("Preloading " +
+	 * repository.save(new Task((long)3, new Date(2021 - 12 - 12), new Date(2021 -
+	 * 12 - 12), "Task2 desc", null, null, TaskState.PROPOSED))); }; }
+	 */
+
 	@Bean
-	CommandLineRunner initDatabaseTask(TaskRepository repository) {
+	CommandLineRunner initDatabaseWorkgroup(WorkgroupRepository repository) {
 
 		return args -> {
 
-			log.info("Preloading " + repository.save(new Task((long)1, new Date(2021 - 12 - 12), new Date(2021 - 12 - 12), "Task1 desc", null, null, TaskState.PROPOSED)));
-			log.info("Preloading " + repository.save(new Task((long)2, new Date(2021 - 12 - 12), new Date(2021 - 12 - 12), "Task2 desc", null, null, TaskState.PROPOSED)));
-			log.info("Preloading " + repository.save(new Task((long)3, new Date(2021 - 12 - 12), new Date(2021 - 12 - 12), "Task2 desc", null, null, TaskState.PROPOSED)));
+			log.info("Preloading " + repository.save(new Workgroup((long) 1, "Workgroup1 name", null, null)));
+			log.info("Preloading " + repository.save(new Workgroup((long) 2, "Workgroup2 name", null, null)));
+			log.info("Preloading " + repository.save(new Workgroup((long) 3, "Workgroup3 name", null, null)));
 		};
 	}
-	*/
-	/*
-	@Bean
-	CommandLineRunner initDatabaseWorkgroup(WorkgroupsRepository repository) {
 
-		return args -> {
-
-			log.info("Preloading " + repository.save(new Workgroups((long)1, "Workgroup1 name", null, null)));
-			log.info("Preloading " + repository.save(new Workgroups((long)2, "Workgroup2 name", null, null)));
-			log.info("Preloading " + repository.save(new Workgroups((long)3, "Workgroup3 name", null, null)));
-			};
-	}
-	*/
 }
