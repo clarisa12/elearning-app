@@ -37,6 +37,7 @@ public class Task {
 
 	@ManyToOne
 	private Assignment tskAssig; // HERE
+	
 	private TaskState tskState;
 
 	public Long getTskId() {

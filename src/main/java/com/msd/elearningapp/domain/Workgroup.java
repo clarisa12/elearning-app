@@ -26,7 +26,7 @@ public class Workgroup {
 	private List<Student> wkrList;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@NotNull(message = "Workgroup must have a mentor!")
+	//@NotNull(message = "Workgroup must have a mentor!")
 	@JoinColumn(name = "profId")
 	private Professor mentor;
 

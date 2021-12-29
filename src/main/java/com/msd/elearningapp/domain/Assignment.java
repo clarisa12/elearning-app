@@ -1,6 +1,7 @@
 package com.msd.elearningapp.domain;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class Assignment {
 	@Id
 	@GeneratedValue
 	@NotNull
-	@Min(10)
+	//@Min(10)
 	private Long assigId;
 
 	@NotNull(message = "Assignment Name is required!")
@@ -32,18 +33,19 @@ public class Assignment {
 
 	@NotNull(message = "Start Date is required!")
 	@Future(message = "Start Date must be a future date!")
-	@Temporal(TemporalType.DATE)
-	private Date assigDatestart;
+	//@Temporal(TemporalType.DATE)
+	private LocalDate assigDatestart;
 
+	
 	@NotNull(message = "End Date is required!")
 	@Future(message = "End Date must be a future date!")
-	@Temporal(TemporalType.DATE)
-	private Date assigDateEnd;
-
+	//@Temporal(TemporalType.DATE)
+	private LocalDate assigDateEnd;
 	private AssignmentState assigState;
 
 	@OneToOne
-	@JoinColumn(name = "assig_starter_stud_id")
+	//@JoinColumn(name = "assig_starter_stud_id")
+	@JoinColumn(name = "student")
 	// @NotNull
 	private Student assigStarter;
 
@@ -66,19 +68,19 @@ public class Assignment {
 		this.assigName = assigName;
 	}
 
-	public Date getAssigDatestart() {
+	public LocalDate getAssigDatestart() {
 		return assigDatestart;
 	}
 
-	public void setAssigDatestart(Date assigDatestart) {
+	public void setAssigDatestart(LocalDate assigDatestart) {
 		this.assigDatestart = assigDatestart;
 	}
 
-	public Date getAssigDateEnd() {
+	public LocalDate getAssigDateEnd() {
 		return assigDateEnd;
 	}
 
-	public void setAssigDateEnd(Date assigDateEnd) {
+	public void setAssigDateEnd(LocalDate assigDateEnd) {
 		this.assigDateEnd = assigDateEnd;
 	}
 
@@ -106,10 +108,10 @@ public class Assignment {
 		this.assigMem = assigMem;
 	}
 
-	public Assignment(@NotNull @Min(10) Long assigId,
+	public Assignment(@NotNull Long assigId,
 			@NotNull(message = "Assignment Name is required!") @Size(min = 1, message = "Assignment must have an explicit name!") String assigName,
-			@NotNull(message = "Start Date is required!") @Future(message = "Start Date must be a future date!") Date assigDatestart,
-			@NotNull(message = "End Date is required!") @Future(message = "End Date must be a future date!") Date assigDateEnd,
+			@NotNull(message = "Start Date is required!") @Future(message = "Start Date must be a future date!") LocalDate assigDatestart,
+			@NotNull(message = "End Date is required!") @Future(message = "End Date must be a future date!") LocalDate assigDateEnd,
 			AssignmentState assigState, Student assigStarter, List<Student> assigMem) {
 		super();
 		this.assigId = assigId;

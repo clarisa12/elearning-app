@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -30,6 +29,10 @@ public class Grade {
 	@Past(message = "Grade date must be earlier than present!")
 	private Date gradeDate;
 
+	//private Professor gradeProf;
+	//private Assignment gradeAssig;
+	//private Workgropu gradeWrk;
+	
 	public Date getGradeDate() {
 		return gradeDate;
 	}
