@@ -51,11 +51,11 @@ class AssignmentController {
     
     return repository.findById(id)
       .map(assignment -> {
-    	  assignment.setAssigDatestart(assignment.getAssigDatestart());
-    		assignment.setAssigDateEnd(assignment.getAssigDateEnd());
-    		assignment.setAssigName(assignment.getAssigName());
-    		assignment.setAssigStarter(assignment.getAssigStarter());
-    		assignment.setAssigMem(assignment.getAssigMem());
+    	assignment.setAssigName(assignment.getAssigName());
+    	assignment.setAssigDatestart(assignment.getAssigDatestart());
+    	assignment.setAssigStarter(assignment.getAssigStarter());
+    	assignment.setAssigMem(assignment.getAssigMem());
+    	assignment.setAssigState(assignment.getAssigState());
         return repository.save(assignment);
       })
       .orElseGet(() -> {
