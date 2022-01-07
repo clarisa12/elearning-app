@@ -50,7 +50,7 @@ public class Assignment {
 	@ManyToMany
 	private List<Student> assigMem;
 
-	@OneToMany
+	@ManyToOne
 	private Workgroup assigWorkgroup;
 
 	@OneToOne

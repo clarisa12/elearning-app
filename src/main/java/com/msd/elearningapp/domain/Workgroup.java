@@ -30,7 +30,7 @@ public class Workgroup {
 	// @JoinColumn(name = "profId")
 	// private Professor mentor;
 
-	@ManyToOne
+	@OneToMany
 	private List<Assignment> wrkAssig;
 
 	public Long getWrkId() {
