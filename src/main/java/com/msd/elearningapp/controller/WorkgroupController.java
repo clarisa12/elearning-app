@@ -51,9 +51,9 @@ class WorkgroupsController {
     
     return repository.findById(id)
       .map(workgroup -> {
-    	  workgroup.setMentor(workgroup.getMentor());
-  		workgroup.setWkrList(workgroup.getWkrList());
-  		workgroup.setWkrName(workgroup.getWkrName());
+    	workgroup.setWrkAssig(workgroup.getWrkAssig());
+  		workgroup.setWrkList(workgroup.getWrkList());
+  		workgroup.setWrkName(workgroup.getWrkName());
         return repository.save(workgroup);
       })
       .orElseGet(() -> {

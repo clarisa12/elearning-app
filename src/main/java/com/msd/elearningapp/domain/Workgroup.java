@@ -20,56 +20,59 @@ public class Workgroup {
 
 	@NotNull(message = "Workgroup Name is required!")
 	@Size(min = 1, message = "Workgroup Name must have an explicit name!")
-	private String wkrName;
+	private String wrkName;
 
 	@OneToMany
-	private List<Student> wkrList;
+	private List<Student> wrkList;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	//@NotNull(message = "Workgroup must have a mentor!")
-	@JoinColumn(name = "profId")
-	private Professor mentor;
+	// @OneToOne(fetch = FetchType.LAZY)
+	// @NotNull(message = "Workgroup must have a mentor!")
+	// @JoinColumn(name = "profId")
+	// private Professor mentor;
 
-	public @NotNull Long getWrkID() {
+	@ManyToOne
+	private List<Assignment> wrkAssig;
+
+	public Long getWrkId() {
 		return wrkId;
 	}
 
-	public void setWrkId(@NotNull Long wrkId) {
+	public void setWrkId(Long wrkId) {
 		this.wrkId = wrkId;
 	}
 
-	public List<Student> getWkrList() {
-		return wkrList;
+	public String getWrkName() {
+		return wrkName;
 	}
 
-	public void setWkrList(List<Student> list) {
-		this.wkrList = list;
+	public void setWrkName(String wrkName) {
+		this.wrkName = wrkName;
 	}
 
-	public String getWkrName() {
-		return wkrName;
+	public List<Student> getWrkList() {
+		return wrkList;
 	}
 
-	public void setWkrName(String wkrName) {
-		this.wkrName = wkrName;
+	public void setWrkList(List<Student> wrkList) {
+		this.wrkList = wrkList;
 	}
 
-	public Professor getMentor() {
-		return mentor;
+	public List<Assignment> getWrkAssig() {
+		return wrkAssig;
 	}
 
-	public void setMentor(Professor mentor) {
-		this.mentor = mentor;
+	public void setWrkAssig(List<Assignment> wrkAssig) {
+		this.wrkAssig = wrkAssig;
 	}
 
 	public Workgroup(@NotNull Long wrkId,
-			@NotNull(message = "Workgroup Name is required!") @Size(min = 1, message = "Workgroup Name must have an explicit name!") String wkrName,
-			List<Student> wkrList, @NotNull(message = "Workgroup must have a mentor!") Professor mentor) {
+			@NotNull(message = "Workgroup Name is required!") @Size(min = 1, message = "Workgroup Name must have an explicit name!") String wrkName,
+			List<Student> wrkList, List<Assignment> wrkAssig) {
 		super();
 		this.wrkId = wrkId;
-		this.wkrName = wkrName;
-		this.wkrList = wkrList;
-		this.mentor = mentor;
+		this.wrkName = wrkName;
+		this.wrkList = wrkList;
+		this.wrkAssig = wrkAssig;
 	}
 
 	public Workgroup() {
@@ -78,7 +81,7 @@ public class Workgroup {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(mentor, wkrList, wkrName, wrkId);
+		return Objects.hash(wrkAssig, wrkId, wrkList, wrkName);
 	}
 
 	@Override
@@ -90,14 +93,10 @@ public class Workgroup {
 		if (getClass() != obj.getClass())
 			return false;
 		Workgroup other = (Workgroup) obj;
-		return Objects.equals(mentor, other.mentor) && Objects.equals(wkrList, other.wkrList)
-				&& Objects.equals(wkrName, other.wkrName) && Objects.equals(wrkId, other.wrkId);
+		return Objects.equals(wrkAssig, other.wrkAssig) && Objects.equals(wrkId, other.wrkId)
+				&& Objects.equals(wrkList, other.wrkList) && Objects.equals(wrkName, other.wrkName);
 	}
 
-	@Override
-	public String toString() {
-		return "Workgroups [wrkId=" + wrkId + ", wkrName=" + wkrName + ", wkrList=" + wkrList + ", mentor=" + mentor
-				+ "]";
-	}
+	
 
 }

@@ -56,6 +56,7 @@ class AssignmentController {
     	assignment.setAssigStarter(assignment.getAssigStarter());
     	assignment.setAssigMem(assignment.getAssigMem());
     	assignment.setAssigState(assignment.getAssigState());
+    	assignment.setAssigWorkgroup(assignment.getAssigWorkgroup());
         return repository.save(assignment);
       })
       .orElseGet(() -> {

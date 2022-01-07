@@ -51,6 +51,17 @@ public class Assignment {
 
 	@ManyToMany
 	private List<Student> assigMem;
+	
+	@OneToMany
+	private Workgroup assigWorkgroup;
+
+	public Workgroup getAssigWorkgroup() {
+		return assigWorkgroup;
+	}
+
+	public void setAssigWorkgroup(Workgroup assigWorkgroup) {
+		this.assigWorkgroup = assigWorkgroup;
+	}
 
 	public Long getAssigId() {
 		return assigId;
@@ -112,7 +123,7 @@ public class Assignment {
 			@NotNull(message = "Assignment Name is required!") @Size(min = 1, message = "Assignment must have an explicit name!") String assigName,
 			@NotNull(message = "Start Date is required!") @Future(message = "Start Date must be a future date!") LocalDate assigDatestart,
 			@NotNull(message = "End Date is required!") @Future(message = "End Date must be a future date!") LocalDate assigDateEnd,
-			AssignmentState assigState, Student assigStarter, List<Student> assigMem) {
+			AssignmentState assigState, Student assigStarter, List<Student> assigMem, Workgroup assigWorkgroup) {
 		super();
 		this.assigId = assigId;
 		this.assigName = assigName;
@@ -121,6 +132,7 @@ public class Assignment {
 		this.assigState = assigState;
 		this.assigStarter = assigStarter;
 		this.assigMem = assigMem;
+		this.assigWorkgroup = assigWorkgroup;
 	}
 
 	public Assignment() {
@@ -129,7 +141,8 @@ public class Assignment {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(assigDateEnd, assigDatestart, assigId, assigMem, assigName, assigStarter, assigState);
+		return Objects.hash(assigDateEnd, assigDatestart, assigId, assigMem, assigName, assigStarter, assigState,
+				assigWorkgroup);
 	}
 
 	@Override
@@ -144,14 +157,9 @@ public class Assignment {
 		return Objects.equals(assigDateEnd, other.assigDateEnd) && Objects.equals(assigDatestart, other.assigDatestart)
 				&& Objects.equals(assigId, other.assigId) && Objects.equals(assigMem, other.assigMem)
 				&& Objects.equals(assigName, other.assigName) && Objects.equals(assigStarter, other.assigStarter)
-				&& assigState == other.assigState;
+				&& assigState == other.assigState && Objects.equals(assigWorkgroup, other.assigWorkgroup);
 	}
 
-	@Override
-	public String toString() {
-		return "Assignment [assigId=" + assigId + ", assigName=" + assigName + ", assigDatestart=" + assigDatestart
-				+ ", assigDateEnd=" + assigDateEnd + ", assigState=" + assigState + ", assigStarter=" + assigStarter
-				+ ", assigMem=" + assigMem + "]";
-	}
+	
 
 }
