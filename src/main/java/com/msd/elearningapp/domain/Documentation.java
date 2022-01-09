@@ -1,23 +1,38 @@
 package com.msd.elearningapp.domain;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "valid"})
+@JsonInclude(Include.NON_NULL)
+//
+@XmlAccessorType(XmlAccessType.NONE)
 @XmlRootElement(name = "Documentation")
 @Entity
 @Table(name = "documentation")
-public class Documentation {
+public class Documentation implements Serializable, Comparable<Documentation>{
+
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
 	private Long idDoc;
 
+	@NotNull
 	@Size(min = 1, max = 10000)
 	private String docBody;
 
@@ -79,6 +94,12 @@ public class Documentation {
 	@Override
 	public String toString() {
 		return "Documentation [idDoc=" + idDoc + ", docBody=" + docBody + ", docObs=" + docObs + "]";
+	}
+
+	@Override
+	public int compareTo(Documentation o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
