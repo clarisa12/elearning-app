@@ -33,7 +33,7 @@ import com.msd.elearningapp.domain.Documentation;
 public class ElearningSpringBootTests {
 	private static Logger logger = Logger.getLogger(ElearningSpringBootTests.class.getName());
 
-	private static String serviceURL = "http://localhost:8080/documentations";
+	private static String serviceURL = "http://localhost:8080/api/documentations";
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -104,7 +104,7 @@ public class ElearningSpringBootTests {
 			//	new HttpEntity<>(headers), new ParameterizedTypeReference<List<Documentation>>() {
 			//	}).getBody();
 		
-		ResponseEntity<List<Documentation>>allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null, 
+		ResponseEntity<List<Documentation>>allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, new HttpEntity<>(headers),
 				new ParameterizedTypeReference<List<Documentation>>() {});
 		List<Documentation> documentations = allDocumentations.getBody();
 		documentations.forEach(d -> System.out.println("Documentation before update: " + d));
