@@ -2,12 +2,14 @@ package com.msd.elearningapp.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.msd.elearningapp.domain.Grade;
@@ -15,39 +17,39 @@ import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.GradeRepository;
 
 @RestController
-class GradeController {
+@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping("/api")
+public class GradeController {
 
   private final GradeRepository repository;
 
-  GradeController(GradeRepository repository) {
+  public GradeController(GradeRepository repository) {
     this.repository = repository;
   }
 
 
-  // Aggregate root
-  // tag::get-aggregate-root[]
   @GetMapping("/grades")
-  List<Grade> all() {
+  public List<Grade> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
   @PostMapping("/grades")
-  Grade newGrade(@RequestBody Grade newGrade) {
+  public Grade newGrade(@RequestBody Grade newGrade) {
     return repository.save(newGrade);
   }
 
   // Single item
   
   @GetMapping("/grades/{id}")
-  Grade one(@PathVariable Long id) {
+  public Grade one(@PathVariable Long id) {
     
     return repository.findById(id)
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   @PutMapping("/grades/{id}")
-  Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
+  public Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
     
     return repository.findById(id)
       .map(grade -> {
@@ -62,7 +64,7 @@ class GradeController {
   }
 
   @DeleteMapping("/grades/{id}")
-  void deleteGrade(@PathVariable Long id) {
+  public void deleteGrade(@PathVariable Long id) {
     repository.deleteById(id);
   }
 }
