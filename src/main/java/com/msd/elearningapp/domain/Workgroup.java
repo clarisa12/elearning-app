@@ -2,6 +2,7 @@ package com.msd.elearningapp.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -22,7 +23,7 @@ public class Workgroup {
 	@Size(min = 1, message = "Workgroup Name must have an explicit name!")
 	private String wrkName;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Student> wrkList;
 
 	// @OneToOne(fetch = FetchType.LAZY)
@@ -30,8 +31,8 @@ public class Workgroup {
 	// @JoinColumn(name = "profId")
 	// private Professor mentor;
 
-	@OneToMany
-	private List<Assignment> wrkAssig;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+	private Set<Assignment> wrkAssig;
 
 	public Long getWrkId() {
 		return wrkId;
@@ -57,17 +58,17 @@ public class Workgroup {
 		this.wrkList = wrkList;
 	}
 
-	public List<Assignment> getWrkAssig() {
+	public Set<Assignment> getWrkAssig() {
 		return wrkAssig;
 	}
 
-	public void setWrkAssig(List<Assignment> wrkAssig) {
+	public void setWrkAssig(Set<Assignment> wrkAssig) {
 		this.wrkAssig = wrkAssig;
 	}
 
 	public Workgroup(@NotNull Long wrkId,
 			@NotNull(message = "Workgroup Name is required!") @Size(min = 1, message = "Workgroup Name must have an explicit name!") String wrkName,
-			List<Student> wrkList, List<Assignment> wrkAssig) {
+			List<Student> wrkList, Set<Assignment> wrkAssig) {
 		super();
 		this.wrkId = wrkId;
 		this.wrkName = wrkName;

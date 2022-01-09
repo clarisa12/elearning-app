@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
@@ -14,9 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "valid" })
 @XmlRootElement(name = "Assignment")
+@Entity
 @Table(name = "assignment")
 public class Assignment {
 
@@ -53,8 +54,18 @@ public class Assignment {
 	@ManyToOne
 	private Workgroup assigWorkgroup;
 
-	@OneToOne
-	private Grade assigGrade;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+	private Set<Task> assigTasks;
+
+	public Set<Task> getAssigTask() {
+		return assigTasks;
+	}
+
+	public void setAssigTask(Set<Task> assigTasks) {
+		this.assigTasks = assigTasks;
+	}
+
+	private int assigGrade;
 
 	public Long getAssigId() {
 		return assigId;
@@ -120,11 +131,11 @@ public class Assignment {
 		this.assigWorkgroup = assigWorkgroup;
 	}
 
-	public Grade getAssigGrade() {
+	public int getAssigGrade() {
 		return assigGrade;
 	}
 
-	public void setAssigGrade(Grade assigGrade) {
+	public void setAssigGrade(int assigGrade) {
 		this.assigGrade = assigGrade;
 	}
 
@@ -133,7 +144,7 @@ public class Assignment {
 			@NotNull(message = "Start Date is required!") @Future(message = "Start Date must be a future date!") LocalDate assigDatestart,
 			@NotNull(message = "End Date is required!") @Future(message = "End Date must be a future date!") LocalDate assigDateEnd,
 			AssignmentState assigState, Student assigStarter, List<Student> assigMem, Workgroup assigWorkgroup,
-			Grade assigGrade) {
+			int assigGrade, Set<Task> assigTasks) {
 		super();
 		this.assigId = assigId;
 		this.assigName = assigName;
@@ -142,8 +153,14 @@ public class Assignment {
 		this.assigState = assigState;
 		this.assigStarter = assigStarter;
 		this.assigMem = assigMem;
+		this.assigTasks = assigTasks;
+
 		this.assigWorkgroup = assigWorkgroup;
 		this.assigGrade = assigGrade;
+	}
+
+	public Assignment() {
+		super();
 	}
 
 	@Override

@@ -39,12 +39,12 @@ class LoadDatabase {
 
 		return args -> {
 
-			log.info("Preloading " + repository.save(new Assignment((long) 110, "Assignment1", LocalDate.of(2022, 1, 1),
-					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
-			log.info("Preloading " + repository.save(new Assignment((long) 111, "Assignment2", LocalDate.of(2022, 1, 1),
-					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
-			log.info("Preloading " + repository.save(new Assignment((long) 112, "Assignment3", LocalDate.of(2022, 1, 1),
-					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
+			log.info("Preloading " + repository.save(new Assignment((long) 110, "Assignment1", LocalDate.of(2022, 6, 1),
+					LocalDate.of(2022, 3, 2), AssignmentState.PROPOSED, null, null,null, 10, null)));
+			log.info("Preloading " + repository.save(new Assignment((long) 111, "Assignment2", LocalDate.of(2022, 7, 1),
+					LocalDate.of(2022, 3, 2), AssignmentState.PROPOSED, null, null, null, 10, null)));
+			log.info("Preloading " + repository.save(new Assignment((long) 112, "Assignment3", LocalDate.of(2022, 8, 1),
+					LocalDate.of(2022, 3, 2), AssignmentState.PROPOSED, null, null, null, 10, null)));
 		};
 	}
 

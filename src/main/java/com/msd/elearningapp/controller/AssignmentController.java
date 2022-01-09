@@ -2,19 +2,14 @@ package com.msd.elearningapp.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.msd.elearningapp.domain.Assignment;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.AssignmentRepository;
 
 @RestController
+@CrossOrigin(origins = {"*"})
 class AssignmentController {
 
   private final AssignmentRepository repository;
@@ -38,32 +33,33 @@ class AssignmentController {
   }
 
   // Single item
-  
+
   @GetMapping("/assignments/{id}")
   Assignment one(@PathVariable Long id) {
-    
+
     return repository.findById(id)
-      .orElseThrow(() -> new ResourceNotFoundException(id));
+            .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
   @PutMapping("/assignments/{id}")
   Assignment replaceAssignment(@RequestBody Assignment newAssignment, @PathVariable Long id) {
-    
+
     return repository.findById(id)
-      .map(assignment -> {
-    	assignment.setAssigName(assignment.getAssigName());
-    	assignment.setAssigDatestart(assignment.getAssigDatestart());
-    	assignment.setAssigStarter(assignment.getAssigStarter());
-    	assignment.setAssigMem(assignment.getAssigMem());
-    	assignment.setAssigState(assignment.getAssigState());
-    	assignment.setAssigWorkgroup(assignment.getAssigWorkgroup());
-    	assignment.setAssigGrade(assignment.getAssigGrade());
-        return repository.save(assignment);
-      })
-      .orElseGet(() -> {
-        newAssignment.setAssigId(id);
-        return repository.save(newAssignment);
-      });
+            .map(assignment -> {
+              assignment.setAssigName(newAssignment.getAssigName());
+              assignment.setAssigDatestart(newAssignment.getAssigDatestart());
+              assignment.setAssigDateEnd(newAssignment.getAssigDateEnd());
+              assignment.setAssigStarter(newAssignment.getAssigStarter());
+              assignment.setAssigMem(newAssignment.getAssigMem());
+              assignment.setAssigState(newAssignment.getAssigState());
+              assignment.setAssigWorkgroup(newAssignment.getAssigWorkgroup());
+              assignment.setAssigGrade(newAssignment.getAssigGrade());
+              return repository.save(assignment);
+            })
+            .orElseGet(() -> {
+              newAssignment.setAssigId(id);
+              return repository.save(newAssignment);
+            });
   }
 
   @DeleteMapping("/assignments/{id}")

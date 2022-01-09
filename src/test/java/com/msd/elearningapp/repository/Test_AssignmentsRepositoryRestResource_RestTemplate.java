@@ -1,6 +1,6 @@
 package com.msd.elearningapp.repository;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;

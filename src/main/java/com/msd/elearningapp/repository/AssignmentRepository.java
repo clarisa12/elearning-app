@@ -22,7 +22,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
 @Repository
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
-	/*
+	/*assigState
     @PersistenceContext
     private EntityManager em;
 
