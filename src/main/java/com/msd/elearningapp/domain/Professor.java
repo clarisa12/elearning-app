@@ -70,11 +70,12 @@ public class Professor extends Person {
 			@NotNull(message = "Last name is required!") @Size(min = 1, message = "Last name must be an explicit name!") String persLastName,
 			@Past(message = "Date of birth must be from past!") Date persDoB,
 			@Email(message = "Email must be in correct format! example@mail.com") @NotNull @Size(min = 5, message = "Email must be in correct format!") String persEmail,
-			@NotNull String persPhone, @Size(min = 1, message = "Adress must be explicit!") String persAdress,
-			@NotNull Long profId, @NotEmpty(message = "Professor must have a title!") String profTitle,
+			@NotNull String persPassword, @NotNull String persPhone,
+			@Size(min = 1, message = "Adress must be explicit!") String persAdress, @NotNull Long profId,
+			@NotEmpty(message = "Professor must have a title!") String profTitle,
 			@NotEmpty(message = "Professor must be part of a department!") String profDepartment,
 			@NotEmpty(message = "Professor must be part of a faculty!") String profFaculty) {
-		super(persIdentityNum, persFirstName, persLastName, persDoB, persEmail, persPhone, persAdress);
+		super(persIdentityNum, persFirstName, persLastName, persDoB, persEmail, persPassword, persPhone, persAdress);
 		this.profId = profId;
 		this.profTitle = profTitle;
 		this.profDepartment = profDepartment;

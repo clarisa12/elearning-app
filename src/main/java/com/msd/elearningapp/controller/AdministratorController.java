@@ -59,6 +59,7 @@ class AdministratorController {
   		administrator.setPersPhone(administrator.getPersPhone());
   		administrator.setAdminTitle(administrator.getAdminTitle());
   		administrator.setAdminDepartment(administrator.getAdminDepartment());
+  		administrator.setPersPassword(administrator.getPersPassword());
         return repository.save(administrator);
       })
       .orElseGet(() -> {

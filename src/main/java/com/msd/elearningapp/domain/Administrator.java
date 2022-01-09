@@ -59,9 +59,10 @@ public class Administrator extends Person {
 			@NotNull(message = "Last name is required!") @Size(min = 1, message = "Last name must be an explicit name!") String persLastName,
 			@Past(message = "Date of birth must be from past!") Date persDoB,
 			@Email(message = "Email must be in correct format! example@mail.com") @NotNull @Size(min = 5, message = "Email must be in correct format!") String persEmail,
-			@NotNull String persPhone, @Size(min = 1, message = "Adress must be explicit!") String persAdress,
-			@NotNull Long adminId, String adminTitle, @NotEmpty String adminDepartment) {
-		super(persIdentityNum, persFirstName, persLastName, persDoB, persEmail, persPhone, persAdress);
+			@NotNull String persPassword, @NotNull String persPhone,
+			@Size(min = 1, message = "Adress must be explicit!") String persAdress, @NotNull Long adminId,
+			String adminTitle, @NotEmpty String adminDepartment) {
+		super(persIdentityNum, persFirstName, persLastName, persDoB, persEmail, persPassword, persPhone, persAdress);
 		this.adminId = adminId;
 		this.adminTitle = adminTitle;
 		this.adminDepartment = adminDepartment;

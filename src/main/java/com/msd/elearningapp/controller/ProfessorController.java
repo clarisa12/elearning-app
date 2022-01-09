@@ -60,6 +60,7 @@ class ProfessorController {
   		professor.setProfTitle(professor.getProfTitle());
   		professor.setProfDepartment(professor.getProfDepartment());
   		professor.setProfFaculty(professor.getProfFaculty());
+  		professor.setPersPassword(professor.getPersPassword());
         return repository.save(professor);
       })
       .orElseGet(() -> {

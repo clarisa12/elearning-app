@@ -55,6 +55,7 @@ class StudentController {
   		student.setPersLastName(student.getPersLastName());
   		student.setPersAdress(student.getPersAdress());
   		student.setPersDoB(student.getPersDoB());
+  		student.setPersPassword(student.getPersPassword());
   		student.setPersEmail(student.getPersEmail());
   		student.setPersPhone(student.getPersPhone());
   		student.setStudId(student.getStudId());

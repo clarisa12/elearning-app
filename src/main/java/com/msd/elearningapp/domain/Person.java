@@ -32,6 +32,9 @@ public class Person {
 	private String persEmail;
 
 	@NotNull
+	private String persPassword;
+
+	@NotNull
 	private String persPhone;
 
 	@Size(min = 1, message = "Adress must be explicit!")
@@ -77,6 +80,14 @@ public class Person {
 		this.persEmail = persEmail;
 	}
 
+	public String getPersPassword() {
+		return persPassword;
+	}
+
+	public void setPersPassword(String persPassword) {
+		this.persPassword = persPassword;
+	}
+
 	public String getPersPhone() {
 		return persPhone;
 	}
@@ -98,16 +109,19 @@ public class Person {
 			@NotNull(message = "Last name is required!") @Size(min = 1, message = "Last name must be an explicit name!") String persLastName,
 			@Past(message = "Date of birth must be from past!") Date persDoB,
 			@Email(message = "Email must be in correct format! example@mail.com") @NotNull @Size(min = 5, message = "Email must be in correct format!") String persEmail,
-			@NotNull String persPhone, @Size(min = 1, message = "Adress must be explicit!") String persAdress) {
+			@NotNull String persPassword, @NotNull String persPhone,
+			@Size(min = 1, message = "Adress must be explicit!") String persAdress) {
 		super();
 		this.persIdentityNum = persIdentityNum;
 		this.persFirstName = persFirstName;
 		this.persLastName = persLastName;
 		this.persDoB = persDoB;
 		this.persEmail = persEmail;
+		this.persPassword = persPassword;
 		this.persPhone = persPhone;
 		this.persAdress = persAdress;
 	}
+	
 
 	public Person() {
 		super();
@@ -115,7 +129,8 @@ public class Person {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(persAdress, persDoB, persEmail, persFirstName, persIdentityNum, persLastName, persPhone);
+		return Objects.hash(persAdress, persDoB, persEmail, persFirstName, persIdentityNum, persLastName, persPassword,
+				persPhone);
 	}
 
 	@Override
@@ -130,14 +145,15 @@ public class Person {
 		return Objects.equals(persAdress, other.persAdress) && Objects.equals(persDoB, other.persDoB)
 				&& Objects.equals(persEmail, other.persEmail) && Objects.equals(persFirstName, other.persFirstName)
 				&& Objects.equals(persIdentityNum, other.persIdentityNum)
-				&& Objects.equals(persLastName, other.persLastName) && Objects.equals(persPhone, other.persPhone);
+				&& Objects.equals(persLastName, other.persLastName) && Objects.equals(persPassword, other.persPassword)
+				&& Objects.equals(persPhone, other.persPhone);
 	}
 
 	@Override
 	public String toString() {
 		return "Person [persIdentityNum=" + persIdentityNum + ", persFirstName=" + persFirstName + ", persLastName="
-				+ persLastName + ", persDoB=" + persDoB + ", persEmail=" + persEmail + ", persPhone=" + persPhone
-				+ ", persAdress=" + persAdress + "]";
+				+ persLastName + ", persDoB=" + persDoB + ", persEmail=" + persEmail + ", persPassword=" + persPassword
+				+ ", persPhone=" + persPhone + ", persAdress=" + persAdress + "]";
 	}
 
 }
