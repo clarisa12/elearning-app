@@ -1,9 +1,16 @@
 package com.msd.elearningapp.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +29,7 @@ public class Workgroup {
 	@Size(min = 1, message = "Workgroup Name must have an explicit name!")
 	private String wrkName;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<Student> wrkList;
 
 	// @OneToOne(fetch = FetchType.LAZY)
@@ -30,8 +37,8 @@ public class Workgroup {
 	// @JoinColumn(name = "profId")
 	// private Professor mentor;
 
-	@OneToMany
-	private List<Assignment> wrkAssig;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
+	private Set<Assignment> wrkAssig;
 
 	public Long getWrkId() {
 		return wrkId;
@@ -57,17 +64,17 @@ public class Workgroup {
 		this.wrkList = wrkList;
 	}
 
-	public List<Assignment> getWrkAssig() {
+	public Set<Assignment> getWrkAssig() {
 		return wrkAssig;
 	}
 
-	public void setWrkAssig(List<Assignment> wrkAssig) {
+	public void setWrkAssig(Set<Assignment> wrkAssig) {
 		this.wrkAssig = wrkAssig;
 	}
 
 	public Workgroup(@NotNull Long wrkId,
 			@NotNull(message = "Workgroup Name is required!") @Size(min = 1, message = "Workgroup Name must have an explicit name!") String wrkName,
-			List<Student> wrkList, List<Assignment> wrkAssig) {
+			List<Student> wrkList, Set<Assignment> wrkAssig) {
 		super();
 		this.wrkId = wrkId;
 		this.wrkName = wrkName;
@@ -97,6 +104,18 @@ public class Workgroup {
 				&& Objects.equals(wrkList, other.wrkList) && Objects.equals(wrkName, other.wrkName);
 	}
 
-	
+	public void addStudent(Student student) {
+		if (wrkList == null) {
+			wrkList = new ArrayList<Student>();
+		}
+		wrkList.add(student);
+	}
+
+	public void addAssignment(Assignment assignment) {
+		if (wrkAssig == null) {
+			wrkAssig = (Set<Assignment>) new ArrayList<Assignment>();
+		}
+		wrkAssig.add(assignment);
+	}
 
 }
