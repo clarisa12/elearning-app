@@ -19,12 +19,10 @@ import com.msd.elearningapp.domain.Workgroup;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.StudentRepository;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api")
-public class StudentController {
-//---
-	@Autowired
+class StudentController {
+
 	private final StudentRepository repository;
 
 	StudentController(StudentRepository repository) {
@@ -49,12 +47,11 @@ public class StudentController {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 
 	}
-	
+
 	@GetMapping("studentes/{id}/workgroups")
 	public ResponseEntity<List<Workgroup>> getStudentWorkgroupById(@PathVariable int id) {
-		Student student = repository.findById((long) id).
-				orElseThrow(() -> new ResourceNotFoundException((long) id));
-		
+		Student student = repository.findById((long) id).orElseThrow(() -> new ResourceNotFoundException((long) id));
+
 		return ResponseEntity.ok(student.getWorkgroups());
 	}
 
@@ -67,6 +64,7 @@ public class StudentController {
 			stud.setPersAdress(stud.getPersAdress());
 			stud.setPersDoB(stud.getPersDoB());
 			stud.setPersEmail(stud.getPersEmail());
+			stud.setPersEmail(stud.getPersPassword());
 			stud.setPersPhone(stud.getPersPhone());
 			stud.setStudSpecialization(stud.getStudSpecialization());
 			stud.setWorkgroups(stud.getWorkgroups());

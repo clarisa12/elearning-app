@@ -16,55 +16,49 @@ import com.msd.elearningapp.domain.Grade;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.GradeRepository;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
-@RequestMapping("/api")
-public class GradeController {
+class GradeController {
 
-  private final GradeRepository repository;
+	private final GradeRepository repository;
 
-  public GradeController(GradeRepository repository) {
-    this.repository = repository;
-  }
+	GradeController(GradeRepository repository) {
+		this.repository = repository;
+	}
 
+	@GetMapping("/grades")
+	public List<Grade> all() {
+		return repository.findAll();
+	}
 
-  @GetMapping("/grades")
-  public List<Grade> all() {
-    return repository.findAll();
-  }
-  // end::get-aggregate-root[]
+	@PostMapping("/grades")
+	public Grade newGrade(@RequestBody Grade newGrade) {
+		return repository.save(newGrade);
+	}
 
-  @PostMapping("/grades")
-  public Grade newGrade(@RequestBody Grade newGrade) {
-    return repository.save(newGrade);
-  }
+	// Single item
 
-  // Single item
-  
-  @GetMapping("/grades/{id}")
-  public Grade one(@PathVariable Long id) {
-    
-    return repository.findById(id)
-      .orElseThrow(() -> new ResourceNotFoundException(id));
-  }
+	@GetMapping("/grades/{id}")
+	public Grade one(@PathVariable Long id) {
 
-  @PutMapping("/grades/{id}")
-  public Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
-    
-    return repository.findById(id)
-      .map(grade -> {
-    	  grade.setGradeDate(grade.getGradeDate());
-    	  grade.setGradeValue(grade.getGradeValue());
-        return repository.save(grade);
-      })
-      .orElseGet(() -> {
-        newGrade.setGradeId(id);
-        return repository.save(newGrade);
-      });
-  }
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	}
 
-  @DeleteMapping("/grades/{id}")
-  public void deleteGrade(@PathVariable Long id) {
-    repository.deleteById(id);
-  }
+	@PutMapping("/grades/{id}")
+	public Grade replaceGrade(@RequestBody Grade newGrade, @PathVariable Long id) {
+
+		return repository.findById(id).map(grade -> {
+			grade.setGradeDate(grade.getGradeDate());
+			grade.setGradeValue(grade.getGradeValue());
+			return repository.save(grade);
+		}).orElseGet(() -> {
+			newGrade.setGradeId(id);
+			return repository.save(newGrade);
+		});
+	}
+
+	@DeleteMapping("/grades/{id}")
+	public void deleteGrade(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
 }

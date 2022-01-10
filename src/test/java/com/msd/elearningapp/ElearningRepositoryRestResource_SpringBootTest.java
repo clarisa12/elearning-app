@@ -28,10 +28,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 import com.msd.elearningapp.domain.Documentation;
+import com.msd.elearningapp.domain.Student;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-public class ElearningSpringBootTests {
-	private static Logger logger = Logger.getLogger(ElearningSpringBootTests.class.getName());
+public class ElearningRepositoryRestResource_SpringBootTest{
+	private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_SpringBootTest.class.getName());
 
 	private static String serviceURL = "http://localhost:8080/documentations";
 
@@ -39,41 +40,172 @@ public class ElearningSpringBootTests {
 	private TestRestTemplate restTemplate;
 
 	@Test
-	public void test_AddDocumentation() throws Exception {
-		// addIntoCollection
-		logger.info("DEBUG: Junit TESTING Spring REST Template: test_AddDocumentation ...");
-
-		Documentation documentation;
-		String resourceString;
-
-		documentation = new Documentation((long) 100, "Documentation_SpringBoot_Data_REST_Service_", "");
-		//
+	@Order(1)
+	public void test1_GetStudents() throws Exception {
+		logger.info("DEBUG: Junit Spring REST Template TESTING: test_GetStudent ...");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", createAuthHeader("msd", "msd"));
 		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		//
-		resourceString = this.restTemplate
-				.exchange(serviceURL, HttpMethod.POST, new HttpEntity<>(documentation, headers), String.class)
-				.getBody();
-		logger.info("++++ " + "NEW Resource-Documentation: " + resourceString);
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+		ResponseEntity<List<Student>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Student>>() {
+				});
+		List<Student> students = allDocumentations.getBody();
+		students.forEach(s -> System.out.println("Student before update: " + s));
 
-	}   
-	
+		// List<Documentation> documentations =
+		// documentationsResource.getEmbedded().getDocumentations();
+		students.forEach(s -> System.out.println("documentations: " + s));
+	}
+
 	@Test
-	public void test_DeleteDocumentation() throws Exception {
+	@Order(2)
+	public void test2_DeleteStudent() throws Exception {
+		logger.info("DEBUG: Junit Spring REST Template TESTING: test_DeleteStudent ...");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", createAuthHeader("msd", "msd"));
+		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+		// documentations.forEach(p -> System.out.println("Documentation before delete:
+		// " + p));
+		ResponseEntity<List<Student>> allstudents = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Student>>() {
+				});
+		List<Student> students = allstudents.getBody();
+		students.forEach(s -> System.out.println("Student before update: " + s));
+
+		// delete requests
+		for (Student s : students) {
+			logger.info(">>> TO DELETE: " + serviceURL + "/" + s.getStudId());
+			this.restTemplate.exchange(serviceURL + "/" + s.getStudId(), HttpMethod.DELETE, new HttpEntity<>(headers),
+					new ParameterizedTypeReference<List<Student>>() {
+					}).getBody();
+		}
+		//
+		students = restTemplate.exchange(serviceURL, HttpMethod.GET, new HttpEntity<>(headers),
+				new ParameterizedTypeReference<List<Student>>() {
+				}).getBody();
+		assertTrue("Fail to delete Student!", students.isEmpty());
+	}
+
+	@Test
+	@Order(3)
+	public void test3_AddStudent() throws Exception {
+		// addIntoCollection
+		logger.info("DEBUG: Junit TESTING Spring REST Template: test_AddStudent ...");
+
+		Integer studentsToAdd = 3;
+		Student student;
+		String resourceString;
+		for (int i = 1; i <= studentsToAdd; i++) {
+			student = new Student((long) i, "Adam", "Smith", null, "adamsmith@gmail.com", "password", "0793988",
+					"Location", (long) i, "FEAA", "IE", null);
+			//
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authorization", createAuthHeader("msd", "msd"));
+			headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+			headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+			//
+			resourceString = this.restTemplate
+					.exchange(serviceURL, HttpMethod.POST, new HttpEntity<>(student, headers), String.class).getBody();
+			logger.info("++++ " + "New Student: " + resourceString);
+		}
+	}
+
+	@Test
+	@Order(4)
+
+	public void test4_UpdateStudent() throws Exception {
+		logger.info("DEBUG: Junit Spring REST Template TESTING: test_UpdateStudent ...");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", createAuthHeader("msd", "msd"));
+		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+
+		ResponseEntity<List<Student>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Student>>() {
+				});
+		List<Student> documentations = allDocumentations.getBody();
+		documentations.forEach(d -> System.out.println("Student before update: " + d));
+
+		// update requests
+		String resourceString;
+		for (Student d : documentations) {
+			logger.info(">>> TO UPDATE: " + serviceURL + "/" + d.getStudId());
+			d.setPersFirstName(d.getPersFirstName() + ".UPDATED");
+			//
+			resourceString = this.restTemplate.exchange(serviceURL + "/" + d.getStudId(), HttpMethod.PUT,
+					new HttpEntity<>(d, headers), String.class).getBody();
+			logger.info("#### " + "UPDATED Student: " + resourceString);
+		}
+
+		// List<Documentation> documentationsAfterUpdate =
+		// responseResource.getEmbedded().getdocumentations();
+		// documentationsAfterUpdate.forEach(p -> System.out.println("Documentation
+		// after update: " + p));
+	}
+
+	@Test
+	@Order(5)
+
+	public void test5_GetDocumentations() throws Exception {
+		logger.info("DEBUG: Junit Spring REST Template TESTING: test_GetDocumentations ...");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", createAuthHeader("msd", "msd"));
+		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+		ResponseEntity<List<Student>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Student>>() {
+				});
+		List<Student> documentations = allDocumentations.getBody();
+		documentations.forEach(d -> System.out.println("Documentation before update: " + d));
+
+		// List<Documentation> documentations =
+		// documentationsResource.getEmbedded().getDocumentations();
+		documentations.forEach(p -> System.out.println("documentations: " + p));
+	}
+
+	@Test
+	@Order(6)
+	public void test6_DeleteDocumentation() throws Exception {
 		logger.info("DEBUG: Junit Spring REST Template TESTING: test_DeleteDocumentation ...");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", createAuthHeader("msd", "msd"));
 		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		
-		//List<Documentation> documentations = restTemplate.exchange(serviceURL, HttpMethod.GET,
-			//	new HttpEntity<>(headers), new ParameterizedTypeReference<List<Documentation>>() {
-			//	}).getBody();
-		//documentations.forEach(p -> System.out.println("Documentation before delete: " + p));
-		ResponseEntity<List<Documentation>>allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null, 
-				new ParameterizedTypeReference<List<Documentation>>() {});
+
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+		// documentations.forEach(p -> System.out.println("Documentation before delete:
+		// " + p));
+		ResponseEntity<List<Documentation>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Documentation>>() {
+				});
 		List<Documentation> documentations = allDocumentations.getBody();
 		documentations.forEach(d -> System.out.println("Documentation before update: " + d));
 
@@ -91,22 +223,48 @@ public class ElearningSpringBootTests {
 		assertTrue("Fail to delete Documentations!", documentations.isEmpty());
 	}
 
-	
 	@Test
+	@Order(7)
+	public void test7_AddDocumentation() throws Exception {
+		// addIntoCollection
+		logger.info("DEBUG: Junit TESTING Spring REST Template: test_AddDocumentation ...");
 
-	public void test_UpdateDocumentation() throws Exception {
+		Documentation documentation;
+		String resourceString;
+
+		documentation = new Documentation((long) 100, "DocumentationTest", "");
+		//
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", createAuthHeader("msd", "msd"));
+		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+		//
+		resourceString = this.restTemplate
+				.exchange(serviceURL, HttpMethod.POST, new HttpEntity<>(documentation, headers), String.class)
+				.getBody();
+		logger.info("++++ " + "NEW Resource-Documentation: " + resourceString);
+
+	}
+
+	@Test
+	@Order(8)
+
+	public void test8_UpdateDocumentation() throws Exception {
 		logger.info("DEBUG: Junit Spring REST Template TESTING: test_UpdateDocumentation ...");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", createAuthHeader("msd", "msd"));
 		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
-		//List<Documentation> documentations = restTemplate.exchange(serviceURL, HttpMethod.GET,
-			//	new HttpEntity<>(headers), new ParameterizedTypeReference<List<Documentation>>() {
-			//	}).getBody();
-		
-		ResponseEntity<List<Documentation>>allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null, 
-				new ParameterizedTypeReference<List<Documentation>>() {});
+		// List<Documentation> documentations = restTemplate.exchange(serviceURL,
+		// HttpMethod.GET,
+		// new HttpEntity<>(headers), new
+		// ParameterizedTypeReference<List<Documentation>>() {
+		// }).getBody();
+
+		ResponseEntity<List<Documentation>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+				new ParameterizedTypeReference<List<Documentation>>() {
+				});
 		List<Documentation> documentations = allDocumentations.getBody();
 		documentations.forEach(d -> System.out.println("Documentation before update: " + d));
 
@@ -126,27 +284,6 @@ public class ElearningSpringBootTests {
 		// documentationsAfterUpdate.forEach(p -> System.out.println("Documentation
 		// after update: " + p));
 	}
-	
-	@Test
-	
-	public void test_GetDocumentations() throws Exception {
-		logger.info("DEBUG: Junit Spring REST Template TESTING: test_GetDocumentations ...");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", createAuthHeader("msd", "msd"));
-		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-		//List<Documentation> documentations = restTemplate.exchange(serviceURL, HttpMethod.GET,
-				//new HttpEntity<>(headers), new ParameterizedTypeReference<List<Documentation>>() {
-				//}).getBody();
-		ResponseEntity<List<Documentation>>allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null, 
-				new ParameterizedTypeReference<List<Documentation>>() {});
-		List<Documentation> documentations = allDocumentations.getBody();
-		documentations.forEach(d -> System.out.println("Documentation before update: " + d));
-
-		// List<Documentation> documentations =
-		// documentationsResource.getEmbedded().getDocumentations();
-		documentations.forEach(p -> System.out.println("documentations: " + p));
-	}
 
 	// Utility method for security
 	private String createAuthHeader(String username, String password) {
@@ -157,5 +294,5 @@ public class ElearningSpringBootTests {
 		String authHeader = "Basic " + new String(encodedAuth);
 
 		return authHeader;
-	} 
+	}
 }

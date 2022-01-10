@@ -2,6 +2,7 @@ package com.msd.elearningapp.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,55 +16,49 @@ import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.WorkgroupRepository;
 
 @RestController
+@CrossOrigin(origins = { "*" })
 class WorkgroupsController {
 
-  private final WorkgroupRepository repository;
+	private final WorkgroupRepository repository;
 
-  WorkgroupsController(WorkgroupRepository repository) {
-    this.repository = repository;
-  }
+	WorkgroupsController(WorkgroupRepository repository) {
+		this.repository = repository;
+	}
 
+	@GetMapping("/workgroups")
+	List<Workgroup> all() {
+		return repository.findAll();
+	}
 
-  // Aggregate root
-  // tag::get-aggregate-root[]
-  @GetMapping("/workgroups")
-  List<Workgroup> all() {
-    return repository.findAll();
-  }
-  // end::get-aggregate-root[]
+	@PostMapping("/workgroups")
+	Workgroup newWorkgroups(@RequestBody Workgroup newWorkgroups) {
+		return repository.save(newWorkgroups);
+	}
 
-  @PostMapping("/workgroups")
-  Workgroup newWorkgroups(@RequestBody Workgroup newWorkgroups) {
-    return repository.save(newWorkgroups);
-  }
+	// Single item
 
-  // Single item
-  
-  @GetMapping("/workgroups/{id}")
-  Workgroup one(@PathVariable Long id) {
-    
-    return repository.findById(id)
-      .orElseThrow(() -> new ResourceNotFoundException(id));
-  }
+	@GetMapping("/workgroups/{id}")
+	Workgroup one(@PathVariable Long id) {
 
-  @PutMapping("/workgroups/{id}")
-  Workgroup replaceWorkgroups(@RequestBody Workgroup newWorkgroups, @PathVariable Long id) {
-    
-    return repository.findById(id)
-      .map(workgroup -> {
-    	workgroup.setWrkAssig(workgroup.getWrkAssig());
-  		workgroup.setWrkList(workgroup.getWrkList());
-  		workgroup.setWrkName(workgroup.getWrkName());
-        return repository.save(workgroup);
-      })
-      .orElseGet(() -> {
-        newWorkgroups.setWrkId(id);
-        return repository.save(newWorkgroups);
-      });
-  }
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+	}
 
-  @DeleteMapping("/workgroups/{id}")
-  void deleteWorkgroups(@PathVariable Long id) {
-    repository.deleteById(id);
-  }
+	@PutMapping("/workgroups/{id}")
+	Workgroup replaceWorkgroups(@RequestBody Workgroup newWorkgroups, @PathVariable Long id) {
+
+		return repository.findById(id).map(workgroup -> {
+			workgroup.setWrkAssig(workgroup.getWrkAssig());
+			workgroup.setWrkList(workgroup.getWrkList());
+			workgroup.setWrkName(workgroup.getWrkName());
+			return repository.save(workgroup);
+		}).orElseGet(() -> {
+			newWorkgroups.setWrkId(id);
+			return repository.save(newWorkgroups);
+		});
+	}
+
+	@DeleteMapping("/workgroups/{id}")
+	void deleteWorkgroups(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
 }

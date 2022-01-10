@@ -27,9 +27,6 @@ public class Person {
 	@Past(message = "Date of birth must be from past!")
 	private Date persDoB;
 
-	@Pattern(regexp="^(?=.{1,64}@)[A-Za-z0-9_-]+(\\\\.[A-Za-z0-9_-]+)*@\" \r\n"
-			+ "        + \"[^-][A-Za-z0-9-]+(\\\\.[A-Za-z0-9-]+)*(\\\\.[A-Za-z]{2,})$\"",
-                 message="{invalid.email}") 
 	@Email(message = "Email must be in correct format! example@mail.com")
 	@NotNull
 	@Size(min = 5, message = "Email must be in correct format!")
