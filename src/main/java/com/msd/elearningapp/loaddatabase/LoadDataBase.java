@@ -47,7 +47,7 @@ class LoadDatabase {
 					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
 		};
 	}
-*/
+
 	@Bean
 	CommandLineRunner initDatabaseDocumentation(DocumentationRepository repository) {
 
@@ -115,6 +115,6 @@ class LoadDatabase {
 					"Stud3 faculty", "Stud1 specialization")));
 		};
 	}
-
+*/
 
 }
