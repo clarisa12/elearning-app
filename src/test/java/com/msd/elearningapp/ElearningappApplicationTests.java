@@ -14,7 +14,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -34,10 +33,11 @@ import com.msd.elearningapp.domain.Student;
 @SpringBootTest
 class ElearningappApplicationTests {
 	private static Logger logger = Logger.getLogger(ElearningappApplicationTests.class.getName());
+
 	@Test
 	void contextLoads() {
 	}
-	
+
 	private static ValidatorFactory validatorFactory;
 	private static Validator validator;
 
@@ -63,23 +63,20 @@ class ElearningappApplicationTests {
 		assertEquals(violations.size(), 0);
 
 	}
-	
+
 	@Test
-	void blankData() {
+	void checkBlankData() {
 		Documentation documentation = new Documentation();
 		documentation.setDocBody("");
 		documentation.setDocObs("that");
 		Set<ConstraintViolation<Documentation>> violations = validator.validate(documentation);
-
 		assertEquals(violations.size(), 1);
-
 		ConstraintViolation<Documentation> violation = violations.iterator().next();
-		assertEquals("Docbody is mandatory", violation.getMessage());
 		assertEquals("docBody", violation.getPropertyPath().toString());
 		assertEquals("", violation.getInvalidValue());
 
 	}
-/*
+
 	@Test
 	void checkEmailValid() {
 		Student student = new Student();
@@ -103,27 +100,23 @@ class ElearningappApplicationTests {
 
 	}
 
-	@Test
-	void checkDOBValid() {
-		Student student = new Student();
-		student.setPersFirstName("FirstName");
-		student.setPersFirstName("LastName");
-		student.setPersAdress("adress");
-		student.setPersEmail("flname@email.com");
-		student.setPersPassword("studpass123");
-		student.setPersPhone("+407123456789");
-		student.setStudFaculty("FEAA");
-		student.setStudSpecialization("IE");
-		student.setPersDoB(new Date(System.currentTimeMillis() + 100000));
+	/*
 
-		Set<ConstraintViolation<Student>> violations = validator.validate(student);
-
-		assertEquals(violations.size(), 1);
-
-		ConstraintViolation<Student> violation = violations.iterator().next();
-		assertEquals("must be a past date", violation.getMessage());
-		assertEquals("birthDate", violation.getPropertyPath().toString());
-
-	}
-*/
+	@Test void checkDOBValid() { Student student = new Student();
+	 * student.setPersFirstName("FirstName"); student.setPersFirstName("LastName");
+	 * student.setPersAdress("adress"); student.setPersEmail("flname@email.com");
+	 * student.setPersPassword("studpass123");
+	 * student.setPersPhone("+407123456789"); student.setStudFaculty("FEAA");
+	 * student.setStudSpecialization("IE"); student.setPersDoB(new
+	 * Date(System.currentTimeMillis() + 100000));
+	 * 
+	 * Set<ConstraintViolation<Student>> violations = validator.validate(student);
+	 * 
+	 * assertEquals(violations.size(), 1);
+	 * 
+	 * ConstraintViolation<Student> violation = violations.iterator().next();
+	 * assertEquals("must be a past date", violation.getMessage());
+	 * assertEquals("birthDate", violation.getPropertyPath().toString());
+	 * 
+	 * }*/
 }
