@@ -34,7 +34,7 @@ import com.msd.elearningapp.domain.Student;
 public class ElearningRepositoryRestResource_SpringBootTest{
 	private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_SpringBootTest.class.getName());
 
-	private static String serviceURL = "http://localhost:8080/documentations";
+	private static String serviceURL = "http://localhost:8080/students";
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -109,7 +109,7 @@ public class ElearningRepositoryRestResource_SpringBootTest{
 		Student student;
 		String resourceString;
 		for (int i = 1; i <= studentsToAdd; i++) {
-			student = new Student((long) i, "Adam", "Smith", null, "adamsmith@gmail.com", "password", "0793988",
+			student = new Student((long) i, "Adam", "Smith", new Date(System.currentTimeMillis() - 99999999), "adamsmith@gmail.com", "P@ssword12", "079398855",
 					"Location", (long) i, "FEAA", "IE", null);
 			//
 			HttpHeaders headers = new HttpHeaders();

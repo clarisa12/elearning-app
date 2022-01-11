@@ -16,23 +16,30 @@ public class Person {
 	private Long persIdentityNum;
 
 	@NotNull(message = "First name is required!")
-	@Size(min = 1, message = "First name must be an explicit name!")
+	@Size(min = 2, message = "First name must be an explicit name!")
 	private String persFirstName;
 
 	@NotNull(message = "Last name is required!")
-	@Size(min = 1, message = "Last name must be an explicit name!")
+	@Size(min = 2, message = "Last name must be an explicit name!")
 	private String persLastName;
 
 	@Temporal(TemporalType.DATE)
 	@Past(message = "Date of birth must be from past!")
 	private Date persDoB;
 
-	@Email(message = "Email must be in correct format! example@mail.com")
+	@Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\." + "[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@"
+			+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Email is invalid.")
+	// @Email(message = "Email must be in correct format! example@mail.com")
 	@NotNull
 	@Size(min = 5, message = "Email must be in correct format!")
 	private String persEmail;
 
+	/*
+	 * Must contain at least 8 characters, at least one digit, at least one lower
+	 * alpha char and one upper alpha char, at least one special character.
+	 */
 	@NotNull
+	@Pattern(regexp = "^.*(?=.{8,})(?=..*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "Password is invalid.")
 	private String persPassword;
 
 	@NotNull
@@ -122,7 +129,6 @@ public class Person {
 		this.persPhone = persPhone;
 		this.persAdress = persAdress;
 	}
-	
 
 	public Person() {
 		super();
