@@ -16,7 +16,7 @@ import com.msd.elearningapp.repository.*;
 class LoadDatabase {
 
 	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
-
+/*
 	@Bean
 	CommandLineRunner initDatabaseAdministrator(AdministratorRepository repository) {
 
@@ -47,7 +47,7 @@ class LoadDatabase {
 					LocalDate.of(2022, 2, 2), AssignmentState.PROPOSED, null, null)));
 		};
 	}
-
+*/
 	@Bean
 	CommandLineRunner initDatabaseDocumentation(DocumentationRepository repository) {
 
@@ -68,7 +68,6 @@ class LoadDatabase {
 		};
 	}
 
-
 	@Bean
 	CommandLineRunner initDatabaseNotification(NotificationRepository repository) {
 
@@ -81,7 +80,7 @@ class LoadDatabase {
 					+ repository.save(new Notification((long) 3, new Date(2021 - 12 - 12), "Notif 3 text")));
 		};
 	}
-
+/*
 	@Bean
 	CommandLineRunner initDatabaseProfessor(ProfessorRepository repository) {
 
