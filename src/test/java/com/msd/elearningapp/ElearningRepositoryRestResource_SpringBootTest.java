@@ -139,15 +139,15 @@ public class ElearningRepositoryRestResource_SpringBootTest{
 		// ParameterizedTypeReference<List<Documentation>>() {
 		// }).getBody();
 
-		ResponseEntity<List<Student>> allDocumentations = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
+		ResponseEntity<List<Student>> allStudents = restTemplate.exchange(serviceURL, HttpMethod.GET, null,
 				new ParameterizedTypeReference<List<Student>>() {
 				});
-		List<Student> documentations = allDocumentations.getBody();
-		documentations.forEach(d -> System.out.println("Student before update: " + d));
+		List<Student> students = allStudents.getBody();
+		students.forEach(d -> System.out.println("Student before update: " + d));
 
 		// update requests
 		String resourceString;
-		for (Student d : documentations) {
+		for (Student d : students) {
 			logger.info(">>> TO UPDATE: " + serviceURL + "/" + d.getStudId());
 			d.setPersFirstName(d.getPersFirstName() + ".UPDATED");
 			//

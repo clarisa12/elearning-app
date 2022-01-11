@@ -23,7 +23,6 @@ import com.msd.elearningapp.domain.Student;
 
 @SpringBootTest
 class ElearningappApplicationTests {
-	private static Logger logger = Logger.getLogger(ElearningappApplicationTests.class.getName());
 
 	@Test
 	void contextLoads() {
@@ -139,6 +138,27 @@ class ElearningappApplicationTests {
 
 		assertTrue(violations.isEmpty());
 
+	}
+	
+	@Test
+	void sizeExceedsLimit() {
+		Student student = new Student();
+		student.setStudId((long) 100000);
+		student.setPersIdentityNum((long) 100000);
+		student.setPersFirstName("F");
+		student.setPersLastName("L");
+		student.setPersAdress("adress");
+		student.setPersEmail("firstlast@email.com");
+		student.setPersPassword("P@ssword12"); //valid pass
+		student.setPersPhone("+40711111111");
+		student.setStudFaculty("FEAA");
+		student.setStudSpecialization("IE");
+		student.setWorkgroups(null);
+		student.setPersDoB(new Date(System.currentTimeMillis() - 99999999));
+		
+		Set<ConstraintViolation<Student>> violations = validator.validate(student);
+
+		assertFalse(violations.isEmpty());
 	}
 
 }

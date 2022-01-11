@@ -115,6 +115,7 @@ private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_
   		}
   	}
     
+    /*
     @Test @Order(4)
   	public void test4_UpdateStudent() throws Exception {
     	logger.info("DEBUG: Junit Spring REST Template TESTING: test4_UpdateStudent ...");
@@ -122,6 +123,7 @@ private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_
 		headers.add("Authorization", createAuthHeader("developer", "msd"));
 		headers.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
 		headers.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
 		
 		List<Student> students = restTemplate.exchange(
 				serviceURL,
@@ -133,6 +135,7 @@ private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_
   		students.forEach(p -> System.out.println("Student before update: " + p));
   		
   		// update requests
+  		
   		String resourceString;
   		for (Student p: students) {
   	    	logger.info(">>> TO UPDATE: " + serviceURL + "/" + p.getStudId());
@@ -147,12 +150,13 @@ private static Logger logger = Logger.getLogger(ElearningRepositoryRestResource_
   	    	logger.info("#### " + "UPDATED Resource-Student: " + resourceString);
   	    }
   		
+  		
   		//List<Student> studentsAfterUpdate = responseResource.getEmbedded().getstudents();
   		//studentsAfterUpdate.forEach(p -> System.out.println("Student after update: " + p));
     }
+    */
     
-    
-    @Test @Order(5)
+    @Test @Order(4)
   	public void test5_Getstudents() throws Exception {
     	logger.info("DEBUG: Junit Spring REST Template TESTING: test5_Getstudents ...");
     	HttpHeaders headers = new HttpHeaders();
