@@ -8,7 +8,6 @@ import com.msd.elearningapp.domain.Student;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.StudentRepository;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 class StudentController {
 
@@ -21,13 +20,15 @@ class StudentController {
 
   // Aggregate root
   // tag::get-aggregate-root[]
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @GetMapping("/students")
   List<Student> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
-  @PostMapping("/students")
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @PostMapping("/students")
   Student newStudent(@RequestBody Student newStudent) {
     return repository.save(newStudent);
   }

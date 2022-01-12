@@ -8,8 +8,8 @@ import com.msd.elearningapp.domain.Workgroup;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.WorkgroupRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
-@CrossOrigin(origins = {"*"})
 class WorkgroupsController {
 
   private final WorkgroupRepository repository;
@@ -21,19 +21,21 @@ class WorkgroupsController {
 
   // Aggregate root
   // tag::get-aggregate-root[]
+  @CrossOrigin(origins = "*")
   @GetMapping("/workgroups")
   List<Workgroup> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
+  @CrossOrigin(origins = "*")
   @PostMapping("/workgroups")
   Workgroup newWorkgroups(@RequestBody Workgroup newWorkgroups) {
     return repository.save(newWorkgroups);
   }
 
   // Single item
-  
+  @CrossOrigin(origins = "*")
   @GetMapping("/workgroups/{id}")
   Workgroup one(@PathVariable Long id) {
     
@@ -41,6 +43,7 @@ class WorkgroupsController {
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
+  @CrossOrigin(origins = "*")
   @PutMapping("/workgroups/{id}")
   Workgroup replaceWorkgroups(@RequestBody Workgroup newWorkgroups, @PathVariable Long id) {
     
@@ -57,6 +60,7 @@ class WorkgroupsController {
       });
   }
 
+  @CrossOrigin(origins = "*")
   @DeleteMapping("/workgroups/{id}")
   void deleteWorkgroups(@PathVariable Long id) {
     repository.deleteById(id);

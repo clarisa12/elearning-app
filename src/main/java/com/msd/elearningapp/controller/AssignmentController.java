@@ -8,8 +8,8 @@ import com.msd.elearningapp.domain.Assignment;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.AssignmentRepository;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = {"*"})
 class AssignmentController {
 
   private final AssignmentRepository repository;
@@ -52,6 +52,7 @@ class AssignmentController {
               assignment.setAssigStarter(newAssignment.getAssigStarter());
               assignment.setAssigMem(newAssignment.getAssigMem());
               assignment.setAssigState(newAssignment.getAssigState());
+              assignment.setAssigTask(newAssignment.getAssigTask());
               assignment.setAssigWorkgroup(newAssignment.getAssigWorkgroup());
               assignment.setAssigGrade(newAssignment.getAssigGrade());
               return repository.save(assignment);

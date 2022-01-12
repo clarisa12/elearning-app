@@ -8,7 +8,6 @@ import com.msd.elearningapp.domain.Task;
 import com.msd.elearningapp.exception.ResourceNotFoundException;
 import com.msd.elearningapp.repository.TaskRepository;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 class TaskController {
 
@@ -21,19 +20,21 @@ class TaskController {
 
   // Aggregate root
   // tag::get-aggregate-root[]
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @GetMapping("/tasks")
   List<Task> all() {
     return repository.findAll();
   }
   // end::get-aggregate-root[]
 
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @PostMapping("/tasks")
   Task newTask(@RequestBody Task newTask) {
     return repository.save(newTask);
   }
 
   // Single item
-  
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @GetMapping("/tasks/{id}")
   Task one(@PathVariable Long id) {
     
@@ -41,6 +42,7 @@ class TaskController {
       .orElseThrow(() -> new ResourceNotFoundException(id));
   }
 
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @PutMapping("/tasks/{id}")
   Task replaceTask(@RequestBody Task newTask, @PathVariable Long id) {
     
@@ -60,6 +62,7 @@ class TaskController {
       });
   }
 
+  @CrossOrigin(origins = "*", maxAge = 3600)
   @DeleteMapping("/tasks/{id}")
   void deleteTask(@PathVariable Long id) {
     repository.deleteById(id);
