@@ -62,13 +62,14 @@ class AssignmentController {
 	public Assignment replaceAssignment(@RequestBody Assignment newAssignment, @PathVariable Long id) {
 
 		return repository.findById(id).map(assignment -> {
-			assignment.setAssigName(assignment.getAssigName());
-			assignment.setAssigDatestart(assignment.getAssigDatestart());
-			assignment.setAssigStarter(assignment.getAssigStarter());
-			assignment.setAssigMem(assignment.getAssigMem());
-			assignment.setAssigState(assignment.getAssigState());
-			assignment.setAssigWorkgroup(assignment.getAssigWorkgroup());
-			assignment.setAssigGrade(assignment.getAssigGrade());
+			assignment.setAssigName(newAssignment.getAssigName());
+			assignment.setAssigDatestart(newAssignment.getAssigDatestart());
+			assignment.setAssigStarter(newAssignment.getAssigStarter());
+			assignment.setAssigMem(newAssignment.getAssigMem());
+			assignment.setAssigState(newAssignment.getAssigState());
+			assignment.setAssigWorkgroup(newAssignment.getAssigWorkgroup());
+          assignment.setAssigTask(newAssignment.getAssigTask());
+          assignment.setAssigGrade(newAssignment.getAssigGrade());
 			return repository.save(assignment);
 		}).orElseGet(() -> {
 			newAssignment.setAssigId(id);

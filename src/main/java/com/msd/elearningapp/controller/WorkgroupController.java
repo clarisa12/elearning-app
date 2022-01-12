@@ -47,9 +47,9 @@ class WorkgroupsController {
 	Workgroup replaceWorkgroups(@RequestBody Workgroup newWorkgroups, @PathVariable Long id) {
 
 		return repository.findById(id).map(workgroup -> {
-			workgroup.setWrkAssig(workgroup.getWrkAssig());
-			workgroup.setWrkList(workgroup.getWrkList());
-			workgroup.setWrkName(workgroup.getWrkName());
+			workgroup.setWrkAssig(newWorkgroups.getWrkAssig());
+			workgroup.setWrkList(newWorkgroups.getWrkList());
+			workgroup.setWrkName(newWorkgroups.getWrkName());
 			return repository.save(workgroup);
 		}).orElseGet(() -> {
 			newWorkgroups.setWrkId(id);

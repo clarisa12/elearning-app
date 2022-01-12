@@ -1,9 +1,5 @@
 package com.msd.elearningapp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -20,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.msd.elearningapp.domain.Documentation;
 import com.msd.elearningapp.domain.Student;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @SpringBootTest
 class ElearningappApplicationTests {
@@ -139,7 +138,10 @@ class ElearningappApplicationTests {
 		assertTrue(violations.isEmpty());
 
 	}
-	
+
+	private void assertTrue(boolean empty) {
+	}
+
 	@Test
 	void sizeExceedsLimit() {
 		Student student = new Student();
